@@ -1,10 +1,11 @@
 # STORE
 
-**This directory is not required, you can delete it if you don't want to use it.**
+This directory takes care of state management.  Nuxt implements it automatically, no need for setup - as long as this directory is called `store` and it contains a file that is not hidden.
 
-This directory contains your Vuex Store files.
-Vuex Store option is implemented in the Nuxt.js framework.
+## Do not rename this directory or delete index.js
 
-Creating a file in this directory automatically activates the option in the framework.
+## Notes
+- Your store is being used to manage language settings for the app. 
+- Right now, the app is only available in English, because you don't have translations for any other languages.
 
 More information about the usage of this directory in [the documentation](https://nuxtjs.org/guide/vuex-store).
