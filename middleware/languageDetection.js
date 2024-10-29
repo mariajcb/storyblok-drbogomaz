@@ -7,8 +7,9 @@ export default function ({ app, isServer, route, store, isDev }) {
   // Determine language (default to 'en')
   const currentLanguage = getLanguage(route);
 
+  // Set the cache version serverside
   if (isServer) {
-    store.commit('setCacheVersion', app.$storyapi.cacheVersion)
+    setCacheVersion(store, app);
   }
 
   if (!store.state.settings._uid || language !== store.state.language) {
@@ -27,4 +28,10 @@ function getContentVersion(route, isDev) {
 // Helper function to retrieve the current language or default to english
 function getLanguage(route) {
   return route.params.language || 'en';
+}
+
+// Helper function to set the cache version to match Storyblok
+function setCacheVersion(store, app) {
+  const cacheVersion = app.$storyapi.cacheVersion;
+  store.commit('setCacheVersion', cacheVersion);
 }
