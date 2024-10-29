@@ -6,6 +6,8 @@ export const state = () => ({
   }
 })
 
+// #34 TODO: Refactor store for Clarity and Error Handling
+
 export const mutations = {
   setSettings(state, settings) {
     state.settings = settings

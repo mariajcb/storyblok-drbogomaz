@@ -1,8 +1,7 @@
 # MIDDLEWARE
 
-**This directory is not required, you can delete it if you don't want to use it.**
+Middleware, in the context of Nuxt, is a navigation guard.  Router is built into Nuxt, so middleware is how you define custom functions that can be run before rendering either a group of pages ("router middleware") or a specific page ("named middleware").
 
-This directory contains your application middleware.
-Middleware let you define custom functions that can be run before rendering either a page or a group of pages.
+You are using router middleware to detect languages on a page, so that you can apply the appropriate translation. You have not yet provided multiple translations for content, so this folder is aspirational rather than useful.
 
 More information about the usage of this directory in [the documentation](https://nuxtjs.org/guide/routing#middleware).
