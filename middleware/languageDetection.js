@@ -12,10 +12,10 @@ export default function ({ app, isServer, route, store, isDev }) {
     setCacheVersion(store, app);
   }
 
-  if (!store.state.settings._uid || language !== store.state.language) {
-    store.commit('setLanguage', language)
-
-    return store.dispatch('loadSettings', {version: version, language: language})
+  // Check if settings need to be loaded or reloaded based on language or missing data
+  if (shouldUpdateLanguage(store, currentLanguage)) {
+    store.commit('setLanguage', currentLanguage);
+    return store.dispatch('loadSettings', { version: contentVersion, language: currentLanguage });
   }
 }
 
@@ -34,4 +34,14 @@ function getLanguage(route) {
 function setCacheVersion(store, app) {
   const cacheVersion = app.$storyapi.cacheVersion;
   store.commit('setCacheVersion', cacheVersion);
+}
+
+// Helper function to check if settings need to be loaded or reloaded
+function shouldUpdateLanguage(store, currentLanguage) {
+  // Check if user specified a different language setting from main nav 
+  // (this is not currently set up )
+  const settingsNotLoaded = !store.state.settings._uid;
+  // Check if route params changed
+  const languageHasChanged = currentLanguage !== store.state.language;
+  return settingsNotLoaded || languageHasChanged;
 }
