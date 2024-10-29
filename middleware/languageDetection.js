@@ -1,9 +1,11 @@
 // TODO: #35 Refactor languageDetection.js for Clarity
 
 export default function ({ app, isServer, route, store, isDev }) {
-  // Determine content version ('draft' or 'published') based on query and environment
+  // Determine content version ('draft' or 'published')
   const contentVersion = getContentVersion(route, isDev);
-  let language = route.params.language || 'en'
+
+  // Determine language (default to 'en')
+  const currentLanguage = getLanguage(route);
 
   if (isServer) {
     store.commit('setCacheVersion', app.$storyapi.cacheVersion)
@@ -20,4 +22,9 @@ export default function ({ app, isServer, route, store, isDev }) {
 function getContentVersion(route, isDev) {
   const isDraftMode = route.query._storyblok || isDev;
   return isDraftMode ? 'draft' : 'published';
+}
+
+// Helper function to retrieve the current language or default to english
+function getLanguage(route) {
+  return route.params.language || 'en';
 }
