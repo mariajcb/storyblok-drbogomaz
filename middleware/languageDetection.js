@@ -1,5 +1,3 @@
-// TODO: #35 Refactor languageDetection.js for Clarity
-
 export default function ({ app, isServer, route, store, isDev }) {
   // Determine content version ('draft' or 'published')
   const contentVersion = getContentVersion(route, isDev);
