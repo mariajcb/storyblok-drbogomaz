@@ -1,5 +1,4 @@
 # DrBogomaz
-> Misha Bogomaz Professional Blog
 
 I built this project for my brother, who is a therapist, when he started his own private practice during the pandemic. 
 
@@ -18,7 +17,7 @@ Storyblok is meant to be used headless, which suited me, because I wanted to foc
 
 I did set up the multilanguage capabilities, following a Storyblok tutorial, but that feature never went to production. I never got translated copy to use for the app, and my brother became a director of the Psychology Department at University of Florida, which did not leave him a lot of time to write a blog or work on his private practice.
 
-Since the technology used for this app is so outdated, I will likely do a rewrite in Nuxt 3, in which case I will not bother with a CMS, but I might still tinker with translation, just because it's cool.
+Nuxt was new to me, and I had never worked with headless technology before. Since dependencies used for this app are so outdated, I will likely do a rewrite in Nuxt 3, in which case I will not bother with a CMS, but I might still tinker with translation, just because it's cool.
 
 Currently, there is a deployment issue with Vercel that I need to fix, so updates are not going to production. Also, I can't run this locally without a whole bunch of updates, but these are the instructions to run it once this issue is resolved: https://github.com/users/mariajcb/projects/1/views/1?pane=issue&itemId=84943422&issue=mariajcb%7Cstoryblok-drbogomaz%7C33.
 
