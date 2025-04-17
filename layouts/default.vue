@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import TopHeader from '~/components/TopHeader.vue'
+import TopHeader from '~/components/navigation/TopHeader.vue'
 import BottomFooter from '~/components/BottomFooter.vue'
 
 export default {
