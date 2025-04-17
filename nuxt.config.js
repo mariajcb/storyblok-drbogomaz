@@ -2,6 +2,7 @@ require('dotenv').config()
 import axios from 'axios'
 
 export default {
+  target: 'static',
   mode: 'universal',
   /*
   ** Headers of the page

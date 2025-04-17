@@ -4,11 +4,13 @@
   "description": "Misha Bogomaz Professional Blog",
   "author": "mariajcb",
   "private": true,
+  "engines": {
+    "node": "18.x"
+  },
   "scripts": {
-    "dev": "nuxt",
-    "build": "nuxt build",
-    "start": "nuxt start",
-    "generate": "nuxt generate",
+    "dev": "NODE_OPTIONS=--openssl-legacy-provider nuxt",
+    "build": "NODE_OPTIONS=--openssl-legacy-provider nuxt build && nuxt generate",
+    "start": "NODE_OPTIONS=--openssl-legacy-provider nuxt start",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore ."
   },
   "dependencies": {
