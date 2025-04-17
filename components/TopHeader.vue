@@ -28,7 +28,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
   .navbar {
     padding: 1rem 4rem;
     background-color: #F4F7FA;

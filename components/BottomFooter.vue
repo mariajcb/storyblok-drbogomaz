@@ -6,7 +6,7 @@
   </footer>
 </template>
 
-<style lang="scss">
+<style scoped>
 .footer {
   background-color: #E8EFF5;
 }
