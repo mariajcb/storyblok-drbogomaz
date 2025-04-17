@@ -3,7 +3,7 @@
     <div class="container container-1">
       <div class="content">
         <h2 class="title has-text-centered">{{blok.title}}</h2>
-        <p class="subtitle" v-html="$options.filters.markdown(blok.text)"></p>
+        <div class="subtitle markdown-content" v-html="renderedText"></div>
       </div>
     </div>
     <blockquote class="quote-card">
@@ -11,7 +11,7 @@
     </blockquote>
     <div class="container">
       <div class="content">
-        <p class="subtitle" v-html="$options.filters.markdown(blok.text2)"></p>
+        <div class="subtitle markdown-content" v-html="renderedText2"></div>
       </div>
       <div class="button-box has-text-centered">
         <nuxt-link class="button is-medium" to="/en/blog">{{ blok.call_to_action_btn }}</nuxt-link>
@@ -20,10 +20,26 @@
   </div>
 </template>
 
-<script>
-export default {
-  props: ['blok']
-}
+<script setup>
+import { useMarkdown } from '~/composables/useMarkdown'
+import { computed } from 'vue'
+
+const props = defineProps({
+  blok: {
+    type: Object,
+    required: true
+  }
+})
+
+const { renderMarkdown } = useMarkdown()
+
+const renderedText = computed(() => {
+  return props.blok.text ? renderMarkdown(props.blok.text) : ''
+})
+
+const renderedText2 = computed(() => {
+  return props.blok.text2 ? renderMarkdown(props.blok.text2) : ''
+})
 </script>
 
 <style lang="scss" scoped>
@@ -49,6 +65,13 @@ export default {
     font-size: 3rem;
   }
 
+  .markdown-content {
+    :deep(p) {
+      margin-bottom: 1em;
+      line-height: 1.6;
+    }
+  }
+
   .quote-card {
     background: #fff;
     padding: 20px;
@@ -71,7 +94,7 @@ export default {
 
   .quote-card::before {
     font-family: Georgia, serif;
-    content: '“';
+    content: '"';
     position: absolute;
     top: 10px;
     left: 10px;
@@ -83,7 +106,7 @@ export default {
 
   .quote-card::after {
     font-family: Georgia, serif;
-    content: '”';
+    content: '"';
     position: absolute;
     bottom: -110px;
     line-height: 100px;

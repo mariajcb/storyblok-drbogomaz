@@ -3,7 +3,7 @@
     <div class="card">
       <div class="card-image is-hidden-tablet">
         <figure class="image is-225X255">
-          <img :src="blok.image_mobile | cdn" :alt="blok.image_mobile.description">
+          <img :src="blok.image_mobile.filename" :alt="blok.image_mobile.description">
         </figure>
       </div>
       <div class="card-content">
@@ -11,11 +11,11 @@
         <div class="media">
           <div class="media-left is-hidden-touch">
             <figure class="image is-400X600">
-              <img :src="blok.image | cdn" :alt="blok.image.description">
+              <img :src="blok.image.filename" :alt="blok.image.description">
             </figure>
           </div>
           <div class="media-content">
-            <div class="content" v-html="$options.filters.markdown(blok.text)"></div>
+            <div class="content markdown-content" v-html="renderedText"></div>
           </div>
         </div>
         <div class="button-box has-text-centered">
@@ -26,10 +26,22 @@
   </div>
 </template>
 
-<script>
-export default {
-  props: ['blok']
-}
+<script setup>
+import { useMarkdown } from '~/composables/useMarkdown'
+import { computed } from 'vue'
+
+const props = defineProps({
+  blok: {
+    type: Object,
+    required: true
+  }
+})
+
+const { renderMarkdown } = useMarkdown()
+
+const renderedText = computed(() => {
+  return props.blok.text ? renderMarkdown(props.blok.text) : ''
+})
 </script>
 
 <style lang="scss" scoped>
@@ -38,6 +50,13 @@ export default {
   font-family: 'Mrs Saint Delafield', cursive;
   font-size: 3rem;
   margin-bottom: 0.5rem;
+}
+
+.markdown-content {
+  :deep(p) {
+    margin-bottom: 1em;
+    line-height: 1.6;
+  }
 }
 
 .button {

@@ -1,10 +1,10 @@
 <template>
   <div class="site">
-    <TopHeader/>
     <main class="site-content" role="main">
-      <nuxt/>
+      <TopHeader />
+      <slot />
     </main>
-    <BottomFooter/>
+    <BottomFooter />
   </div>
 </template>
 
