@@ -2,6 +2,7 @@ export const state = () => ({
   cacheVersion: '',
   language: 'en',
   settings: {
+    // users cannot currently change languages from browser, this is not used
     main_nav: []
   }
 })
