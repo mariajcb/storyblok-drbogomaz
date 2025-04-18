@@ -1,12 +1,12 @@
 <template>
   <footer class="footer">
     <div class="content has-text-centered">
-      <nuxt-link class="bottom-footer__link" to="/en/sitemap">Sitemap</nuxt-link>
+      <nuxt-link class="bottom-footer__link" to="/sitemap">Sitemap</nuxt-link>
     </div>
   </footer>
 </template>
 
-<style lang="scss">
+<style scoped>
 .footer {
   background-color: #E8EFF5;
 }

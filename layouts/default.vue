@@ -1,15 +1,15 @@
 <template>
   <div class="site">
-    <TopHeader/>
     <main class="site-content" role="main">
-      <nuxt/>
+      <TopHeader />
+      <slot />
     </main>
-    <BottomFooter/>
+    <BottomFooter />
   </div>
 </template>
 
 <script>
-import TopHeader from '~/components/TopHeader.vue'
+import TopHeader from '~/components/navigation/TopHeader.vue'
 import BottomFooter from '~/components/BottomFooter.vue'
 
 export default {
@@ -20,8 +20,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
-@import '../assets/scss/styles.scss';
+<style>
 .site {
   display: flex;
   min-height: 100vh;
