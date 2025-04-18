@@ -1,6 +1,5 @@
-import { resolve } from 'path'
-
-export default defineNuxtConfig({
+// https://nuxt.com/docs/api/configuration/nuxt-config
+export default {
   css: ['@/assets/css/roboto.css'],
 
   modules: [
@@ -30,9 +29,9 @@ export default defineNuxtConfig({
       region: 'us'
     },
     components: {
-      teaser: resolve(__dirname, './storyblok/Teaser.vue'),
-      bio: resolve(__dirname, './storyblok/Bio.vue'),
-      blog: resolve(__dirname, './storyblok/Blog.vue')
+      teaser: './storyblok/Teaser.vue',
+      bio: './storyblok/Bio.vue',
+      blog: './storyblok/Blog.vue'
     }
   },
-})
+}
