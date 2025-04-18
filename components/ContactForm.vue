@@ -125,6 +125,7 @@ const messageError = computed(() => {
 
 const status = ref(null)
 const isSubmitting = ref(false)
+const submitError = ref(null)
 
 const onSubmit = async (e) => {
   e.preventDefault()
@@ -171,10 +172,9 @@ const onSubmit = async (e) => {
     emailTouched.value = false
     messageTouched.value = false
   } catch (error) {
-    console.error('Error submitting form:', error)
-    status.value = 'error'
-  } finally {
+    // Handle error
     isSubmitting.value = false
+    submitError.value = 'An error occurred while submitting the form. Please try again later.'
   }
 }
 </script>
