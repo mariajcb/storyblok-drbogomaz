@@ -125,7 +125,6 @@ const messageError = computed(() => {
 
 const status = ref(null)
 const isSubmitting = ref(false)
-const submitError = ref(null)
 
 const onSubmit = async (e) => {
   e.preventDefault()
@@ -143,11 +142,12 @@ const onSubmit = async (e) => {
   
   isSubmitting.value = true
   try {
-    // Submit form to Storyblok
-    const response = await fetch('https://api.storyblok.com/v2/spaces/YOUR_SPACE_ID/forms/YOUR_FORM_ID', {
+    // Submit form to Formcarry
+    const response = await fetch('https://formcarry.com/s/mskpCnP2jVxt', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Accept': 'application/json'
       },
       body: JSON.stringify({
         name: name.value,
@@ -157,24 +157,28 @@ const onSubmit = async (e) => {
       })
     })
 
-    if (!response.ok) {
-      throw new Error('Form submission failed')
+    const data = await response.json()
+    
+    if (data.code === 200) {
+      status.value = 'success'
+      // Reset form
+      name.value = ''
+      phone.value = ''
+      email.value = ''
+      message.value = ''
+      nameTouched.value = false
+      phoneTouched.value = false
+      emailTouched.value = false
+      messageTouched.value = false
+    } else {
+      // Formcarry error
+      status.value = 'error'
     }
-
-    status.value = 'success'
-    // Reset form
-    name.value = ''
-    phone.value = ''
-    email.value = ''
-    message.value = ''
-    nameTouched.value = false
-    phoneTouched.value = false
-    emailTouched.value = false
-    messageTouched.value = false
   } catch (error) {
-    // Handle error
+    // Network error
+    status.value = 'error'
+  } finally {
     isSubmitting.value = false
-    submitError.value = 'An error occurred while submitting the form. Please try again later.'
   }
 }
 </script>
