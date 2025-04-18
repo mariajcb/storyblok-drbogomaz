@@ -5,7 +5,7 @@
         <NuxtLink to="/" class="text-white hover:text-[#50b0ae]">Home</NuxtLink>
       </li>
       <li>
-        <NuxtLink to="/en/blog" class="text-white hover:text-[#50b0ae]">Blog</NuxtLink>
+        <NuxtLink to="/blog" class="text-white hover:text-[#50b0ae]">Blog</NuxtLink>
       </li>
       <li>
         <NuxtLink to="/contact" class="text-white hover:text-[#50b0ae]">Contact</NuxtLink>

@@ -36,7 +36,7 @@
         <div class="text-center mt-8">
           <NuxtLink
             class="inline-block bg-[#718FCB] text-white px-6 py-3 rounded font-medium hover:bg-white hover:text-[#718FCB] transition-colors"
-            to="/contact">
+            to="/en/contact">
             {{ blok.call_to_action_btn }}
           </NuxtLink>
         </div>

@@ -11,7 +11,7 @@
       <p class="text-2xl mb-8 drop-shadow-md">{{ blok.body }}</p>
       <NuxtLink 
         class="inline-block bg-white text-[#718FCB] px-6 py-3 rounded font-medium hover:bg-[#718FCB] hover:text-white transition-colors" 
-        to="/contact"
+        to="/en/contact"
       >
         Contact Me
       </NuxtLink>

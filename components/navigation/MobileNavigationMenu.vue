@@ -19,7 +19,7 @@
         </li>
         <li>
           <NuxtLink 
-            to="/en/blog" 
+            to="/blog" 
             class="block text-white text-lg font-bold hover:text-[#50b0ae] py-2"
             @click="$emit('close')"
           >

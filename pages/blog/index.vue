@@ -26,7 +26,7 @@ export default {
 
     return context.app.$storyapi.get('cdn/stories', {
       version: version,
-      starts_with: `${context.store.state.language}/blog`,
+      starts_with: 'blog',
       cv: context.store.state.cacheVersion
     }).then((res) => {
       return res
@@ -62,4 +62,4 @@ export default {
     color: #363636!important;
   }
 }
-</style>
+</style> 

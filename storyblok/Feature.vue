@@ -51,7 +51,7 @@
               Cancel
             </button>
             <NuxtLink 
-              to="/contact"
+              to="/en/contact"
               class="bg-[#718FCB] text-white px-4 py-2 rounded hover:bg-white hover:text-[#718FCB] transition-colors"
             >
               Book Session

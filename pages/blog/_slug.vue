@@ -10,7 +10,6 @@
 </template>
 
 <script>
-
 export default {
   data () {
     return {
@@ -37,7 +36,7 @@ export default {
     // Load the JSON from the API
     let version = context.query._storyblok || context.isDev ? 'draft' : 'published'
 
-    return context.app.$storyapi.get(`cdn/stories/${context.params.language}/blog/${context.params.slug}`, {
+    return context.app.$storyapi.get(`cdn/stories/blog/${context.params.slug}`, {
       version: version,
       cv: context.store.state.cacheVersion
     }).then((res) => {
@@ -48,7 +47,6 @@ export default {
   }
 }
 </script>
-
 
 <style lang="scss" scoped>
 .blog {
@@ -65,4 +63,4 @@ export default {
 .blog__body {
   line-height: 1.6;
 }
-</style>
+</style> 
