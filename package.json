@@ -27,5 +27,8 @@
   },
   "dependencies": {
     "marked": "^15.0.8"
+  },
+  "overrides": {
+    "@nuxt/core": "npm:@nuxt/bridge@3.16.2"
   }
 }
