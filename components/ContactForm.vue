@@ -1,79 +1,98 @@
 <template lang="html">
-  <div class="container">
-    <form v-if="!status" @submit="sendForm">
-      <h1 class="title">Contact Me</h1>
-      <p class="subtitle">Please use this form for general information purposes only. DO NOT send personal health information through this form. Specific client care will be addressed during your appointment. If this is an emergency, please call 911.</p>
+  <div class="max-w-2xl mx-auto px-4 py-10">
+    <form v-if="!status" @submit="sendForm" class="space-y-6">
+      <h1 class="text-3xl font-bold text-[#718FCB] mb-4">Contact Me</h1>
+      <p class="text-gray-600 mb-8">Please use this form for general information purposes only. DO NOT send personal health information through this form. Specific client care will be addressed during your appointment. If this is an emergency, please call 911.</p>
 
-      <div class="field">
+      <div class="space-y-2">
         <ValidationProvider rules="required" v-slot="{ errors }">
-          <label class="label">Name</label>
-          <div class="control">
+          <label class="block text-sm font-medium text-gray-700">Name</label>
+          <div>
             <input
               required
-              :class=" errors[0] ? 'input is-danger' : 'input' "
+              :class="errors[0] ? 'border-red-500' : 'border-gray-300'"
+              class="mt-1 block w-full rounded-md border px-3 py-2 focus:border-[#718FCB] focus:outline-none focus:ring-1 focus:ring-[#718FCB]"
               v-model="name"
               name="name"
               type="text"
-              placeholder="Type your name here">
+              placeholder="Type your name here"
+            >
           </div>
-          <p class="help is-danger">{{ errors[0] }}</p>
+          <p class="mt-1 text-sm text-red-600">{{ errors[0] }}</p>
         </ValidationProvider>
       </div>
 
-      <div class="field">
+      <div class="space-y-2">
         <ValidationProvider rules="required" v-slot="{ errors }">
-        <label class="label">Phone</label>
-        <div class="control">
-          <input
-            required
-            :class=" errors[0] ? 'input is-danger' : 'input' "
-            v-model="phone"
-            name="phone"
-            type="text"
-            placeholder="(xxx)xxx-xxxx">
-        </div>
-          <p class="help is-danger">{{ errors[0] }}</p>
-        </ValidationProvider>
-      </div>
-
-      <div class="field">
-        <ValidationProvider rules="required|email" v-slot="{ errors }">
-          <label class="label">Email</label>
-          <div class="control">
+          <label class="block text-sm font-medium text-gray-700">Phone</label>
+          <div>
             <input
               required
-              :class=" errors[0] ? 'input is-danger' : 'input' "
+              :class="errors[0] ? 'border-red-500' : 'border-gray-300'"
+              class="mt-1 block w-full rounded-md border px-3 py-2 focus:border-[#718FCB] focus:outline-none focus:ring-1 focus:ring-[#718FCB]"
+              v-model="phone"
+              name="phone"
+              type="text"
+              placeholder="(xxx)xxx-xxxx"
+            >
+          </div>
+          <p class="mt-1 text-sm text-red-600">{{ errors[0] }}</p>
+        </ValidationProvider>
+      </div>
+
+      <div class="space-y-2">
+        <ValidationProvider rules="required|email" v-slot="{ errors }">
+          <label class="block text-sm font-medium text-gray-700">Email</label>
+          <div>
+            <input
+              required
+              :class="errors[0] ? 'border-red-500' : 'border-gray-300'"
+              class="mt-1 block w-full rounded-md border px-3 py-2 focus:border-[#718FCB] focus:outline-none focus:ring-1 focus:ring-[#718FCB]"
               v-model="email"
               name="email"
               type="email"
-              placeholder="youremail@domain.com">
+              placeholder="youremail@domain.com"
+            >
           </div>
-          <p class="help is-danger">{{ errors[0] }}</p>
+          <p class="mt-1 text-sm text-red-600">{{ errors[0] }}</p>
         </ValidationProvider>
       </div>
 
-      <div class="field">
+      <div class="space-y-2">
         <ValidationProvider rules="required" v-slot="{ errors }">
-          <label class="label">Message</label>
-          <div class="control">
+          <label class="block text-sm font-medium text-gray-700">Message</label>
+          <div>
             <textarea
               required
-              :class=" errors[0] ? 'textarea is-danger' : 'textarea' "
+              :class="errors[0] ? 'border-red-500' : 'border-gray-300'"
+              class="mt-1 block w-full rounded-md border px-3 py-2 focus:border-[#718FCB] focus:outline-none focus:ring-1 focus:ring-[#718FCB]"
               v-model="message"
-              type="textarea"
               name="message"
-              placeholder="Leave a message...">
-            </textarea>
+              rows="4"
+              placeholder="Leave a message..."
+            ></textarea>
           </div>
-          <p class="help is-danger">{{ errors[0] }}</p>
+          <p class="mt-1 text-sm text-red-600">{{ errors[0] }}</p>
         </ValidationProvider>
       </div>
-      <button type="submit" class="button">Submit</button>
+
+      <button 
+        type="submit" 
+        class="w-full bg-[#718FCB] text-white px-6 py-3 rounded font-medium hover:bg-white hover:text-[#718FCB] transition-colors"
+      >
+        Submit
+      </button>
     </form>
-    <h2 v-if="status === 'success'">Thank you, we got your submission!</h2>
-    <h2 v-if="status === 'error'">
-      Oops, something went wrong. Please try again.
-    </h2>
+
+    <div v-if="status === 'success'" class="text-center py-8">
+      <h2 class="text-2xl font-bold text-[#718FCB]">Thank you, we got your submission!</h2>
+    </div>
+
+    <div v-if="status === 'error'" class="text-center py-8">
+      <h2 class="text-2xl font-bold text-red-600">
+        Oops, something went wrong. Please try again.
+      </h2>
+    </div>
   </div>
 </template>
 

@@ -1,17 +1,21 @@
 <template>
-  <div class="teaser hero is-fullheight-with-navbar has-background" v-editable="blok">
-    <img class="hero-background" 
-    :src="blok.Image?.filename" 
-    :alt=" blok.Image?.alt || ''"
+  <div class="relative min-h-[calc(100vh-3.25rem)] overflow-hidden" v-editable="blok">
+    <img 
+      class="absolute inset-0 w-full h-full object-cover object-center" 
+      :src="blok.Image?.filename" 
+      :alt="blok.Image?.alt || ''"
     >
-    <div class=" hero-body">
-    <div class="container">
-      <h1 class="title">{{ blok.title }}</h1>
-      <h2 class="subtitle"><strong>{{ blok.subtitle }}</strong></h2>
-      <p class="subtitle">{{ blok.text }}</p>
-      <nuxt-link class="button is-medium" to="/contact">Contact Me</nuxt-link>
+    <div class="relative z-10 container mx-auto px-4 py-12">
+      <h1 class="text-5xl font-bold text-white mb-4 drop-shadow-lg">{{ blok.title }}</h1>
+      <h2 class="text-2xl font-bold text-white mb-4 drop-shadow-md"><strong>{{ blok.subtitle }}</strong></h2>
+      <p class="text-2xl text-white mb-8 drop-shadow-md">{{ blok.text }}</p>
+      <NuxtLink 
+        class="inline-block bg-white text-[#718FCB] px-6 py-3 rounded font-medium hover:bg-[#718FCB] hover:text-white transition-colors" 
+        to="/contact"
+      >
+        Contact Me
+      </NuxtLink>
     </div>
-  </div>
   </div>
 </template>
 

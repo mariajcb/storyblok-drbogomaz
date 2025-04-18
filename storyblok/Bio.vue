@@ -1,25 +1,34 @@
 <template lang="html">
-  <div v-editable="blok" class="bio">
-    <div class="card">
-      <div class="card-image is-hidden-tablet">
-        <figure class="image is-225X255">
-          <img :src="blok.image_mobile.filename" :alt="blok.image_mobile.description">
-        </figure>
+  <div v-editable="blok" class="max-w-4xl mx-auto">
+    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+      <div class="md:hidden">
+        <img 
+          class="w-full h-[255px] object-cover" 
+          :src="blok.image_mobile.filename" 
+          :alt="blok.image_mobile.description"
+        >
       </div>
-      <div class="card-content">
-        <h2 class="title has-text-centered">{{blok.title}}</h2>
-        <div class="media">
-          <div class="media-left is-hidden-touch">
-            <figure class="image is-400X600">
-              <img :src="blok.image.filename" :alt="blok.image.description">
-            </figure>
+      <div class="p-6">
+        <h2 class="text-4xl text-[#718FCB] font-['Mrs_Saint_Delafield'] text-center mb-4">{{blok.title}}</h2>
+        <div class="flex flex-col md:flex-row gap-8">
+          <div class="hidden md:block">
+            <img 
+              class="w-[400px] h-[600px] object-cover" 
+              :src="blok.image.filename" 
+              :alt="blok.image.description"
+            >
           </div>
-          <div class="media-content">
-            <div class="content markdown-content" v-html="renderedText"></div>
+          <div class="flex-1">
+            <div class="prose max-w-none" v-html="renderedText"></div>
           </div>
         </div>
-        <div class="button-box has-text-centered">
-          <nuxt-link class="button is-medium" to="/contact">{{ blok.call_to_action_btn }}</nuxt-link>
+        <div class="text-center mt-8">
+          <NuxtLink 
+            class="inline-block bg-[#718FCB] text-white px-6 py-3 rounded font-medium hover:bg-white hover:text-[#718FCB] transition-colors" 
+            to="/contact"
+          >
+            {{ blok.call_to_action_btn }}
+          </NuxtLink>
         </div>
       </div>
     </div>
@@ -45,28 +54,10 @@ const renderedText = computed(() => {
 </script>
 
 <style lang="scss" scoped>
-.title {
-  color: #718FCB;
-  font-family: 'Mrs Saint Delafield', cursive;
-  font-size: 3rem;
-  margin-bottom: 0.5rem;
-}
-
-.markdown-content {
+.prose {
   :deep(p) {
     margin-bottom: 1em;
     line-height: 1.6;
-  }
-}
-
-.button {
-  background-color: #718FCB;
-  margin-top: auto;
-  color: #ffffff;
-  font-weight: 500;
-  &:hover {
-    background-color: #ffffff;
-    color: #718FCB;
   }
 }
 </style>
