@@ -26,6 +26,7 @@
     "sass-embedded": "^1.86.3"
   },
   "dependencies": {
+    "dotenv": "^16.5.0",
     "marked": "^15.0.8"
   }
 }

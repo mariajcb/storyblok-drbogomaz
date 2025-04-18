@@ -25,6 +25,7 @@
 </template>
 
 <script setup>
+// import { useStoryblok } from '@storyblok/nuxt';
 const { getStories } = useStoryblok()
 
 // Get all pages
