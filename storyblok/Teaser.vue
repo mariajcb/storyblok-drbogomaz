@@ -1,14 +1,14 @@
 <template>
   <div class="relative min-h-[calc(100vh-3.25rem)] overflow-hidden" v-editable="blok">
     <img 
-      class="absolute inset-0 w-full h-full object-cover object-center" 
+      class="absolute inset-0 w-full h-full object-cover object-top" 
       :src="blok.Image?.filename" 
       :alt="blok.Image?.alt || ''"
     >
     <div class="relative z-10 container mx-auto px-4 py-12">
-      <h1 class="text-5xl font-bold text-white mb-4 drop-shadow-lg">{{ blok.title }}</h1>
-      <h2 class="text-2xl font-bold text-white mb-4 drop-shadow-md"><strong>{{ blok.subtitle }}</strong></h2>
-      <p class="text-2xl text-white mb-8 drop-shadow-md">{{ blok.text }}</p>
+      <h1 class="text-5xl font-bold mb-4 drop-shadow-lg">{{ blok.headline || 'Default Title' }}</h1>
+      <h2 class="text-2xl font-bold mb-4 drop-shadow-md"><strong>{{ blok.subtitle || 'Default Subtitle' }}</strong></h2>
+      <p class="text-2xl mb-8 drop-shadow-md">{{ blok.body }}</p>
       <NuxtLink 
         class="inline-block bg-white text-[#718FCB] px-6 py-3 rounded font-medium hover:bg-[#718FCB] hover:text-white transition-colors" 
         to="/contact"
@@ -27,9 +27,6 @@ const props = defineProps({
   },
 })
 
-console.log('Full blok data:', props.blok)
-console.log('Image data:', props.blok.Image)
-console.log('Image filename:', props.blok.Image?.filename)
 </script>
 
 <style lang="scss" scoped>
