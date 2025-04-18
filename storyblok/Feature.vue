@@ -1,14 +1,14 @@
 <template>
-  <div v-editable="blok" class="w-full p-12 bg-[#f7f6fd] rounded-[5px] text-center flex flex-col h-[380px]">
+  <div v-editable="blok" class="w-full bg-[#f7f6fd] rounded-[5px] text-center flex flex-col min-h-[450px] h-full p-12">
     <div class="flex-grow">
       <h3 class="text-2xl text-[#1d243d] font-bold mb-4">{{ blok.name }}</h3>
       <p class="mb-4">
         {{ blok.description }}
       </p>
     </div>
-    <div class="mt-auto">
+    <div class="mt-4">
       <button 
-        class="bg-[#718FCB] text-white px-6 py-2 rounded hover:bg-white hover:text-[#718FCB] transition-colors" 
+        class="w-full bg-[#718FCB] text-white px-6 py-2 rounded hover:bg-white hover:text-[#718FCB] transition-colors" 
         @click="isOpen = !isOpen"
       >
         Learn More
