@@ -1,11 +1,18 @@
 <template>
   <div 
-    class="lg:hidden"
+    class="lg:hidden z-50 fixed inset-0"
     :class="{ 'hidden': !isOpen }"
     role="dialog"
     aria-modal="true"
     aria-label="Mobile navigation menu"
   >
+    <button
+      class="absolute top-4 right-4 text-white text-3xl focus:outline-none"
+      @click="$emit('close')"
+      aria-label="Close menu"
+    >
+      &times;
+    </button>
     <nav class="bg-[#718FCB] py-4">
       <ul class="container mx-auto px-4 space-y-4">
         <li>
