@@ -247,8 +247,8 @@ onMounted(() => {
   }
   
   &__btn {
-    padding: 0.75rem 1.5rem;
-    border-radius: 8px;
+    padding: 0.5rem 1.5rem;
+    border-radius: 4px;
     font-weight: 500;
     font-size: 0.95rem;
     border: none;
@@ -271,8 +271,8 @@ onMounted(() => {
       color: white;
       
       &:hover:not(:disabled) {
-        background-color: #50b0ae;
-        transform: translateY(-1px);
+        background-color: white;
+        color: #718FCB;
       }
       
       &:active:not(:disabled) {

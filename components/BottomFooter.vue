@@ -12,6 +12,12 @@
           >
             Privacy Policy
           </NuxtLink>
+          <button 
+            @click="showCookiePreferences"
+            class="text-[#718FCB] hover:text-[#50b0ae] transition-colors bg-transparent border-none cursor-pointer"
+          >
+            Cookie Preferences
+          </button>
           <NuxtLink 
             to="/contact" 
             class="text-[#718FCB] hover:text-[#50b0ae] transition-colors"
@@ -29,6 +35,21 @@
     </div>
   </footer>
 </template>
+
+<script setup>
+// Get cookie consent composable
+const { hasResponded } = useCookieConsent()
+
+// Show cookie preferences
+const showCookiePreferences = () => {
+  if (process.client) {
+    // Clear existing consent to show banner again
+    localStorage.removeItem('cookie-consent')
+    // Reload page to show cookie banner
+    window.location.reload()
+  }
+}
+</script>
 
 <style scoped>
 .footer {
