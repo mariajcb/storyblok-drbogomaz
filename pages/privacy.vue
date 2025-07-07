@@ -166,14 +166,9 @@
         <section class="mb-8">
           <h2 class="text-2xl font-bold text-[#1d243d] mb-4">Contact Information</h2>
           <p class="mb-4">
-            If you have any questions about this Privacy Policy or our data practices, please contact us:
+            If you have any questions about this Privacy Policy or our data practices, please contact us:           <a class="text-blue-500" href="/contact">Contact Form.</a>
+
           </p>
-          <div class="bg-gray-50 p-4 rounded-lg">
-            <p class="mb-2"><strong>Dr. Misha Bogomaz</strong></p>
-            <p class="mb-2">Email: [Contact email]</p>
-            <p class="mb-2">Phone: [Contact phone]</p>
-            <p class="mb-2">Address: [Practice address]</p>
-          </div>
         </section>
 
         <div class="mt-12 pt-8 border-t border-gray-200">

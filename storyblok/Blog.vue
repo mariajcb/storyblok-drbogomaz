@@ -17,6 +17,9 @@ const props = defineProps({
   }
 })
 
+// Get gtag from plugin
+const { $gtag } = useNuxtApp()
+
 const { renderMarkdown } = useMarkdown()
 
 const renderedBody = computed(() => {
@@ -25,13 +28,13 @@ const renderedBody = computed(() => {
 
 // Track content interaction (link clicks, etc.)
 const trackContentInteraction = (event) => {
-  if (process.client && window.gtag) {
+  if ($gtag) {
     // Track link clicks
     if (event.target.tagName === 'A') {
       const linkText = event.target.textContent
       const linkHref = event.target.href
       
-      window.gtag('event', 'blog_link_click', {
+      $gtag('event', 'blog_link_click', {
         blog_title: props.blok.name,
         link_text: linkText,
         link_url: linkHref,
@@ -44,12 +47,12 @@ const trackContentInteraction = (event) => {
 
 // Track blog content load
 onMounted(() => {
-  if (process.client && window.gtag) {
+  if ($gtag) {
     // Calculate estimated reading time
     const wordCount = props.blok.body ? props.blok.body.split(' ').length : 0
     const estimatedReadingTime = Math.ceil(wordCount / 200) // Average reading speed
     
-    window.gtag('event', 'blog_content_loaded', {
+    $gtag('event', 'blog_content_loaded', {
       blog_title: props.blok.name,
       word_count: wordCount,
       estimated_reading_time_minutes: estimatedReadingTime,

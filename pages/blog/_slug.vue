@@ -19,6 +19,9 @@ const story = ref(null)
 const error = ref(null)
 const loading = ref(true)
 
+// Get gtag from plugin
+const { $gtag } = useNuxtApp()
+
 // Load the JSON from the API
 const { slug } = useRoute().params
 const version = 'published' // Always use published version
@@ -53,24 +56,22 @@ try {
 
 // Track blog post view when story loads
 watch(story, (newStory) => {
-  if (newStory && newStory.content) {
+  if (newStory && newStory.content && $gtag) {
     // Track blog post view
-    if (process.client && window.gtag) {
-      window.gtag('event', 'blog_view', {
-        blog_title: newStory.content.name,
-        blog_slug: slug,
-        blog_intro: newStory.content.intro,
-        blog_created_at: newStory.created_at,
-        blog_updated_at: newStory.updated_at,
-        content_type: 'therapy_blog'
-      })
-    }
+    $gtag('event', 'blog_view', {
+      blog_title: newStory.content.name,
+      blog_slug: slug,
+      blog_intro: newStory.content.intro,
+      blog_created_at: newStory.created_at,
+      blog_updated_at: newStory.updated_at,
+      content_type: 'therapy_blog'
+    })
   }
 }, { immediate: true })
 
 // Track reading engagement
 onMounted(() => {
-  if (process.client && story.value) {
+  if (process.client && story.value && $gtag) {
     // Track scroll depth
     let maxScrollDepth = 0
     let scrollTrackingSent = false
@@ -85,7 +86,7 @@ onMounted(() => {
         
         // Track at 25%, 50%, 75%, and 100%
         if ([25, 50, 75, 100].includes(scrollPercent) && !scrollTrackingSent) {
-          window.gtag?.('event', 'blog_scroll_depth', {
+          $gtag('event', 'blog_scroll_depth', {
             blog_title: story.value.content.name,
             blog_slug: slug,
             scroll_percent: scrollPercent,
@@ -107,7 +108,7 @@ onMounted(() => {
       
       // Track at 30 seconds, 1 minute, 2 minutes, and 5 minutes
       if ([30, 60, 120, 300].includes(timeSpent) && !timeTrackingSent) {
-        window.gtag?.('event', 'blog_reading_time', {
+        $gtag('event', 'blog_reading_time', {
           blog_title: story.value.content.name,
           blog_slug: slug,
           time_spent_seconds: timeSpent,
