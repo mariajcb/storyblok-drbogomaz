@@ -96,6 +96,95 @@
         </section>
 
         <section class="mb-8">
+          <h2 class="text-2xl font-bold text-[#1d243d] mb-4">Cookie Policy</h2>
+          
+          <h3 class="text-xl font-semibold text-[#1d243d] mb-3">What Are Cookies?</h3>
+          <p class="mb-4">
+            Cookies are small text files that are stored on your device when you visit our website. They help us provide you with a better experience by remembering your preferences and understanding how you use our site.
+          </p>
+
+          <h3 class="text-xl font-semibold text-[#1d243d] mb-3">Types of Cookies We Use</h3>
+          
+          <div class="bg-gray-50 p-4 rounded-lg mb-4">
+            <h4 class="font-semibold text-[#1d243d] mb-2">Essential Cookies</h4>
+            <p class="text-sm text-gray-600 mb-2">
+              These cookies are necessary for the website to function properly. They cannot be disabled and are automatically set when you visit our site.
+            </p>
+            <ul class="text-sm text-gray-600 list-disc pl-4 space-y-1">
+              <li>Session management and security</li>
+              <li>Cookie consent preferences</li>
+              <li>Basic website functionality</li>
+            </ul>
+          </div>
+
+          <div class="bg-gray-50 p-4 rounded-lg mb-4">
+            <h4 class="font-semibold text-[#1d243d] mb-2">Analytics Cookies (Optional)</h4>
+            <p class="text-sm text-gray-600 mb-2">
+              These cookies help us understand how visitors use our website so we can improve your experience. They are only set with your explicit consent.
+            </p>
+            <ul class="text-sm text-gray-600 list-disc pl-4 space-y-1">
+              <li>Google Analytics 4 tracking</li>
+              <li>Page view and engagement metrics</li>
+              <li>Website performance monitoring</li>
+              <li>Content effectiveness analysis</li>
+            </ul>
+          </div>
+
+          <h3 class="text-xl font-semibold text-[#1d243d] mb-3">Managing Your Cookie Preferences</h3>
+          <p class="mb-4">
+            You have full control over your cookie preferences. You can:
+          </p>
+          <ul class="list-disc pl-6 mb-4 space-y-2">
+            <li><strong>Accept all cookies:</strong> Allow both essential and analytics cookies</li>
+            <li><strong>Reject analytics cookies:</strong> Only allow essential cookies</li>
+            <li><strong>Change preferences anytime:</strong> Update your choices through our cookie preferences page</li>
+            <li><strong>Browser settings:</strong> Use your browser's privacy settings to manage cookies</li>
+          </ul>
+
+          <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+            <h4 class="font-semibold text-[#1d243d] mb-2">Cookie Preferences</h4>
+            <p class="text-sm text-gray-600 mb-3">
+              Manage your cookie settings and update your preferences at any time.
+            </p>
+            <NuxtLink 
+              to="/cookie-preferences" 
+              class="inline-block bg-[#718FCB] text-white px-6 py-2 rounded hover:bg-white hover:text-[#718FCB] transition-colors text-sm font-medium"
+            >
+              Manage Cookie Preferences
+            </NuxtLink>
+          </div>
+
+          <h3 class="text-xl font-semibold text-[#1d243d] mb-3">Third-Party Cookies</h3>
+          <p class="mb-4">
+            Our website may use third-party services that set their own cookies:
+          </p>
+          <ul class="list-disc pl-6 mb-4 space-y-2">
+            <li><strong>Google Analytics:</strong> For website analytics and performance monitoring</li>
+            <li><strong>Google Fonts:</strong> For typography (if applicable)</li>
+          </ul>
+          <p class="mb-4 text-sm text-gray-600">
+            These third-party cookies are subject to their respective privacy policies. We do not control these cookies and recommend reviewing the privacy policies of these services.
+          </p>
+
+          <h3 class="text-xl font-semibold text-[#1d243d] mb-3">Cookie Duration</h3>
+          <ul class="list-disc pl-6 mb-4 space-y-2">
+            <li><strong>Session cookies:</strong> Deleted when you close your browser</li>
+            <li><strong>Persistent cookies:</strong> Remain on your device for a set period (up to 2 years for analytics)</li>
+            <li><strong>Consent cookies:</strong> Remember your preferences for 1 year</li>
+          </ul>
+
+          <h3 class="text-xl font-semibold text-[#1d243d] mb-3">Your Rights Regarding Cookies</h3>
+          <p class="mb-4">Under privacy laws like GDPR and CCPA, you have the right to:</p>
+          <ul class="list-disc pl-6 mb-4 space-y-2">
+            <li>Be informed about cookie usage before they are set</li>
+            <li>Give or withdraw consent for non-essential cookies</li>
+            <li>Access information about what cookies are used</li>
+            <li>Request deletion of cookie data</li>
+            <li>Opt-out of cookie tracking</li>
+          </ul>
+        </section>
+
+        <section class="mb-8">
           <h2 class="text-2xl font-bold text-[#1d243d] mb-4">Data Sharing and Disclosure</h2>
           <p class="mb-4">We do not sell, trade, or otherwise transfer your personal information to third parties, except in the following circumstances:</p>
           <ul class="list-disc pl-6 mb-4 space-y-2">
@@ -167,7 +256,6 @@
           <h2 class="text-2xl font-bold text-[#1d243d] mb-4">Contact Information</h2>
           <p class="mb-4">
             If you have any questions about this Privacy Policy or our data practices, please contact us:           <a class="text-blue-500" href="/contact">Contact Form.</a>
-
           </p>
         </section>
 
