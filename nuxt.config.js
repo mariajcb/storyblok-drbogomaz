@@ -13,11 +13,41 @@ export default {
       },
     ],
     '@nuxtjs/tailwindcss',
+    '@nuxtjs/google-analytics',
   ],
 
   runtimeConfig: {
     public: {
-      storyblokApiToken: process.env.STORYBLOK_API_TOKEN
+      storyblokApiToken: process.env.STORYBLOK_API_TOKEN,
+      gaMeasurementId: process.env.GA_MEASUREMENT_ID
+    }
+  },
+
+  googleAnalytics: {
+    id: process.env.GA_MEASUREMENT_ID,
+    debug: {
+      enabled: process.env.NODE_ENV === 'development',
+      sendHitTask: process.env.NODE_ENV === 'production'
+    },
+    autoTracking: {
+      screenview: true,
+      pageviewOnLoad: true,
+      exception: true,
+      pageviewOnRouteChange: true
+    },
+    ecommerce: {
+      enabled: true,
+      enhanced: true
+    },
+    customVars: [
+      { name: 'user_type', value: 'therapy_client' },
+      { name: 'content_category', value: 'healthcare' }
+    ],
+    anonymizeIp: true,
+    respectDoNotTrack: true,
+    consent: {
+      analytics_storage: 'denied',
+      ad_storage: 'denied'
     }
   },
 
