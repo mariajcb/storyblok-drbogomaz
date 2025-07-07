@@ -2,12 +2,12 @@
   <div class="blog">
     <h2 class="title">{{ blok.name }}</h2>
     <p class="subtitle">{{ blok.intro }}</p>
-    <div class="blog__body" v-html="renderedBody"></div>
+    <div class="blog__body" v-html="renderedBody" @click="trackContentInteraction"></div>
   </div>
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useMarkdown } from '~/composables/useMarkdown'
 
 const props = defineProps({
@@ -21,6 +21,42 @@ const { renderMarkdown } = useMarkdown()
 
 const renderedBody = computed(() => {
   return props.blok.body ? renderMarkdown(props.blok.body) : ''
+})
+
+// Track content interaction (link clicks, etc.)
+const trackContentInteraction = (event) => {
+  if (process.client && window.$ga) {
+    // Track link clicks
+    if (event.target.tagName === 'A') {
+      const linkText = event.target.textContent
+      const linkHref = event.target.href
+      
+      window.$ga.event('blog', 'link_click', {
+        blog_title: props.blok.name,
+        link_text: linkText,
+        link_url: linkHref,
+        content_type: 'therapy_blog',
+        link_type: linkHref.startsWith('http') ? 'external' : 'internal'
+      })
+    }
+  }
+}
+
+// Track blog content load
+onMounted(() => {
+  if (process.client && window.$ga) {
+    // Calculate estimated reading time
+    const wordCount = props.blok.body ? props.blok.body.split(' ').length : 0
+    const estimatedReadingTime = Math.ceil(wordCount / 200) // Average reading speed
+    
+    window.$ga.event('blog', 'content_loaded', {
+      blog_title: props.blok.name,
+      word_count: wordCount,
+      estimated_reading_time_minutes: estimatedReadingTime,
+      content_type: 'therapy_blog',
+      has_intro: !!props.blok.intro
+    })
+  }
 })
 </script>
 

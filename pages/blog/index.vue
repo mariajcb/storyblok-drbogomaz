@@ -11,7 +11,11 @@
     <div v-else>
       <div :key="blogPost.content._uid" v-for="blogPost in blogPosts" class="container blog__overview">
         <h2>
-          <NuxtLink class="blog__detail-link" :to="`/blog/${blogPost.slug}`">
+          <NuxtLink 
+            class="blog__detail-link" 
+            :to="`/blog/${blogPost.slug}`"
+            @click="trackBlogPostClick(blogPost)"
+          >
             {{ blogPost.content.name }}
           </NuxtLink>
         </h2>
@@ -27,7 +31,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 
 const blogPosts = ref([])
 const error = ref(null)
@@ -38,6 +42,31 @@ const timestamp = (date) => {
   const timeStamp = date.slice(0, -5).replace(/T/g, ' ')
   return timeStamp
 }
+
+// Track blog post click
+const trackBlogPostClick = (blogPost) => {
+  if (process.client && window.$ga) {
+    window.$ga.event('blog', 'click', {
+      blog_title: blogPost.content.name,
+      blog_slug: blogPost.slug,
+      blog_intro: blogPost.content.intro,
+      blog_created_at: blogPost.created_at,
+      content_type: 'therapy_blog',
+      page_location: 'blog_index'
+    })
+  }
+}
+
+// Track blog index page view
+onMounted(() => {
+  if (process.client && window.$ga) {
+    window.$ga.event('blog', 'index_view', {
+      total_posts: blogPosts.value.length,
+      content_type: 'therapy_blog_listing',
+      page_location: 'blog_index'
+    })
+  }
+})
 
 // Load blog posts
 const config = useRuntimeConfig()
