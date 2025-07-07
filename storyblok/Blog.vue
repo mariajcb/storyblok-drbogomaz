@@ -25,13 +25,13 @@ const renderedBody = computed(() => {
 
 // Track content interaction (link clicks, etc.)
 const trackContentInteraction = (event) => {
-  if (process.client && window.$ga) {
+  if (process.client && window.gtag) {
     // Track link clicks
     if (event.target.tagName === 'A') {
       const linkText = event.target.textContent
       const linkHref = event.target.href
       
-      window.$ga.event('blog', 'link_click', {
+      window.gtag('event', 'blog_link_click', {
         blog_title: props.blok.name,
         link_text: linkText,
         link_url: linkHref,
@@ -44,12 +44,12 @@ const trackContentInteraction = (event) => {
 
 // Track blog content load
 onMounted(() => {
-  if (process.client && window.$ga) {
+  if (process.client && window.gtag) {
     // Calculate estimated reading time
     const wordCount = props.blok.body ? props.blok.body.split(' ').length : 0
     const estimatedReadingTime = Math.ceil(wordCount / 200) // Average reading speed
     
-    window.$ga.event('blog', 'content_loaded', {
+    window.gtag('event', 'blog_content_loaded', {
       blog_title: props.blok.name,
       word_count: wordCount,
       estimated_reading_time_minutes: estimatedReadingTime,

@@ -13,7 +13,7 @@ export default {
       },
     ],
     '@nuxtjs/tailwindcss',
-    '@nuxtjs/google-analytics',
+    '@nuxtjs/google-gtag',
   ],
 
   runtimeConfig: {
@@ -23,32 +23,20 @@ export default {
     }
   },
 
-  googleAnalytics: {
+  googleGtag: {
     id: process.env.GA_MEASUREMENT_ID,
-    debug: {
-      enabled: process.env.NODE_ENV === 'development',
-      sendHitTask: process.env.NODE_ENV === 'production'
+    config: {
+      page_title: 'Dr. Misha Bogomaz',
+      page_location: 'https://drbogomaz.com',
+      send_page_view: true,
+      anonymize_ip: true,
+      allow_google_signals: false,
+      allow_ad_personalization_signals: false
     },
-    autoTracking: {
-      screenview: true,
-      pageviewOnLoad: true,
-      exception: true,
-      pageviewOnRouteChange: true
-    },
-    ecommerce: {
-      enabled: true,
-      enhanced: true
-    },
-    customVars: [
-      { name: 'user_type', value: 'therapy_client' },
-      { name: 'content_category', value: 'healthcare' }
-    ],
-    anonymizeIp: true,
-    respectDoNotTrack: true,
-    consent: {
-      analytics_storage: 'denied',
-      ad_storage: 'denied'
-    }
+    debug: process.env.NODE_ENV === 'development',
+    loadScript: true,
+    enableRouterView: true,
+    devtools: process.env.NODE_ENV === 'development'
   },
 
   compatibilityDate: '2025-04-17',

@@ -45,8 +45,8 @@ const timestamp = (date) => {
 
 // Track blog post click
 const trackBlogPostClick = (blogPost) => {
-  if (process.client && window.$ga) {
-    window.$ga.event('blog', 'click', {
+  if (process.client && window.gtag) {
+    window.gtag('event', 'blog_click', {
       blog_title: blogPost.content.name,
       blog_slug: blogPost.slug,
       blog_intro: blogPost.content.intro,
@@ -59,8 +59,8 @@ const trackBlogPostClick = (blogPost) => {
 
 // Track blog index page view
 onMounted(() => {
-  if (process.client && window.$ga) {
-    window.$ga.event('blog', 'index_view', {
+  if (process.client && window.gtag) {
+    window.gtag('event', 'blog_index_view', {
       total_posts: blogPosts.value.length,
       content_type: 'therapy_blog_listing',
       page_location: 'blog_index'

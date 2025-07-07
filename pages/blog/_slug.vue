@@ -55,8 +55,8 @@ try {
 watch(story, (newStory) => {
   if (newStory && newStory.content) {
     // Track blog post view
-    if (process.client && window.$ga) {
-      window.$ga.event('blog', 'view', {
+    if (process.client && window.gtag) {
+      window.gtag('event', 'blog_view', {
         blog_title: newStory.content.name,
         blog_slug: slug,
         blog_intro: newStory.content.intro,
@@ -85,7 +85,7 @@ onMounted(() => {
         
         // Track at 25%, 50%, 75%, and 100%
         if ([25, 50, 75, 100].includes(scrollPercent) && !scrollTrackingSent) {
-          window.$ga?.event('blog', 'scroll_depth', {
+          window.gtag?.('event', 'blog_scroll_depth', {
             blog_title: story.value.content.name,
             blog_slug: slug,
             scroll_percent: scrollPercent,
@@ -107,7 +107,7 @@ onMounted(() => {
       
       // Track at 30 seconds, 1 minute, 2 minutes, and 5 minutes
       if ([30, 60, 120, 300].includes(timeSpent) && !timeTrackingSent) {
-        window.$ga?.event('blog', 'reading_time', {
+        window.gtag?.('event', 'blog_reading_time', {
           blog_title: story.value.content.name,
           blog_slug: slug,
           time_spent_seconds: timeSpent,
