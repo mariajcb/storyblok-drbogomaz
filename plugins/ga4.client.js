@@ -1,3 +1,5 @@
+import { watch } from 'vue'
+
 export default defineNuxtPlugin(() => {
   const config = useRuntimeConfig()
   const measurementId = config.public.gaMeasurementId
@@ -132,9 +134,23 @@ export default defineNuxtPlugin(() => {
 
   // Enhanced consent checking with error handling
   const checkConsentAndInitialize = async () => {
+    // Wait for consent to be loaded, with timeout
     if (!isLoaded.value) {
-      // Wait for consent to be loaded
-      return
+      // Wait up to 5 seconds for consent to load
+      let attempts = 0
+      while (!isLoaded.value && attempts < 50) {
+        await new Promise(resolve => setTimeout(resolve, 100))
+        attempts++
+      }
+      
+      if (!isLoaded.value) {
+        console.warn('Consent system failed to load within timeout, proceeding with conservative approach')
+        // Provide no-op gtag function as fallback
+        window.gtag = () => {
+          console.log('Analytics disabled due to consent system timeout')
+        }
+        return
+      }
     }
 
     // Check for consent errors

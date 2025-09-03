@@ -1,3 +1,6 @@
+import { ref, readonly, nextTick } from 'vue'
+import { CookieStorage } from '~/utils/cookieStorage'
+
 export const useCookieConsent = () => {
   const consent = ref(null)
   const isLoaded = ref(false)
@@ -10,6 +13,24 @@ export const useCookieConsent = () => {
   const STORAGE_KEY = 'cookie-consent'
   const FALLBACK_KEY = 'cookie-consent-fallback'
 
+  // Analytics tracking helper
+  const trackAnalyticsEvent = (eventName, eventParameters) => {
+    if (!process.client || !window.gtag || typeof window.gtag !== 'function') {
+      return
+    }
+
+    try {
+      window.gtag('event', eventName, {
+        ...eventParameters,
+        page_location: window.location.pathname,
+        content_type: 'therapy_website'
+      })
+    } catch (e) {
+      // Silently fail to avoid circular dependency issues
+      console.warn(`Could not track ${eventName}:`, e.message)
+    }
+  }
+
   // Error handling utility
   const handleError = (operation, err) => {
     const errorMessage = `Cookie consent ${operation} failed: ${err.message}`
@@ -21,50 +42,10 @@ export const useCookieConsent = () => {
     }
     
     // Track error for monitoring
-    if (process.client && window.gtag) {
-      window.gtag('event', 'cookie_consent_error', {
-        error_operation: operation,
-        error_message: err.message,
-        page_location: window.location.pathname,
-        content_type: 'therapy_website'
-      })
-    }
-  }
-
-  // Check if localStorage is available and working
-  const isLocalStorageAvailable = () => {
-    if (!process.client) return false
-    
-    try {
-      const testKey = '__localStorage_test__'
-      localStorage.setItem(testKey, 'test')
-      localStorage.removeItem(testKey)
-      return true
-    } catch (e) {
-      return false
-    }
-  }
-
-  // Fallback storage using sessionStorage
-  const getFallbackStorage = () => {
-    if (!process.client) return null
-    
-    try {
-      const fallback = sessionStorage.getItem(FALLBACK_KEY)
-      return fallback ? JSON.parse(fallback) : null
-    } catch (e) {
-      return null
-    }
-  }
-
-  const setFallbackStorage = (data) => {
-    if (!process.client) return
-    
-    try {
-      sessionStorage.setItem(FALLBACK_KEY, JSON.stringify(data))
-    } catch (e) {
-      handleError('fallback storage', e)
-    }
+    trackAnalyticsEvent('cookie_consent_error', {
+      error_operation: operation,
+      error_message: err.message
+    })
   }
 
   // Initialize consent state from localStorage with error handling
@@ -81,9 +62,9 @@ export const useCookieConsent = () => {
 
     try {
       // Check if localStorage is available
-      if (!isLocalStorageAvailable()) {
+      if (!CookieStorage.isAvailable()) {
         console.warn('localStorage not available, using session storage fallback')
-        const fallback = getFallbackStorage()
+        const fallback = CookieStorage.getFallback()
         if (fallback) {
           consent.value = fallback
         }
@@ -91,20 +72,18 @@ export const useCookieConsent = () => {
         return
       }
 
-      const stored = localStorage.getItem(STORAGE_KEY)
+      const stored = CookieStorage.get(STORAGE_KEY)
       if (stored) {
-        const parsed = JSON.parse(stored)
-        
         // Validate consent data structure
-        if (parsed && typeof parsed.analytics === 'boolean' && parsed.timestamp) {
-                  // Check if consent has expired
-        const consentAge = Date.now() - new Date(parsed.timestamp).getTime()
-        if (consentAge > CONSENT_DURATION) {
-          console.log('Cookie consent expired, clearing old consent')
-          clearConsent()
-        } else {
-          consent.value = parsed
-        }
+        if (stored && typeof stored.analytics === 'boolean' && stored.timestamp) {
+          // Check if consent has expired
+          const consentAge = Date.now() - new Date(stored.timestamp).getTime()
+          if (consentAge > CONSENT_DURATION) {
+            console.log('Cookie consent expired, clearing old consent')
+            clearConsent()
+          } else {
+            consent.value = stored
+          }
         } else {
           console.warn('Invalid cookie consent data structure, resetting')
           clearConsent()
@@ -113,7 +92,7 @@ export const useCookieConsent = () => {
     } catch (e) {
       handleError('initialization', e)
       // Try fallback storage
-      const fallback = getFallbackStorage()
+      const fallback = CookieStorage.getFallback()
       if (fallback) {
         consent.value = fallback
       }
@@ -136,32 +115,28 @@ export const useCookieConsent = () => {
     }
 
     try {
-      if (isLocalStorageAvailable()) {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(consentData))
+      if (CookieStorage.isAvailable()) {
+        CookieStorage.set(STORAGE_KEY, consentData)
         // Also save to fallback storage for redundancy
-        setFallbackStorage(consentData)
+        CookieStorage.setFallback(consentData)
       } else {
         // Use fallback storage only
-        setFallbackStorage(consentData)
+        CookieStorage.setFallback(consentData)
       }
       
       consent.value = consentData
       error.value = null
 
       // Track consent for monitoring
-      if (window.gtag) {
-        window.gtag('event', 'cookie_consent_saved', {
-          consent_given: userConsent,
-          consent_type: consentType,
-          consent_version: CONSENT_VERSION,
-          page_location: window.location.pathname,
-          content_type: 'therapy_website'
-        })
-      }
+      trackAnalyticsEvent('cookie_consent_saved', {
+        consent_given: userConsent,
+        consent_type: consentType,
+        consent_version: CONSENT_VERSION
+      })
     } catch (e) {
       handleError('saving consent', e)
       // Try fallback storage
-      setFallbackStorage(consentData)
+      CookieStorage.setFallback(consentData)
       consent.value = consentData
     }
   }
@@ -209,20 +184,15 @@ export const useCookieConsent = () => {
     if (!process.client) return
 
     try {
-      if (isLocalStorageAvailable()) {
-        localStorage.removeItem(STORAGE_KEY)
+      if (CookieStorage.isAvailable()) {
+        CookieStorage.remove(STORAGE_KEY)
       }
-      sessionStorage.removeItem(FALLBACK_KEY)
+      CookieStorage.removeFallback()
       consent.value = null
       error.value = null
 
       // Track consent clearing for monitoring
-      if (window.gtag) {
-        window.gtag('event', 'cookie_consent_cleared', {
-          page_location: window.location.pathname,
-          content_type: 'therapy_website'
-        })
-      }
+      trackAnalyticsEvent('cookie_consent_cleared')
     } catch (e) {
       handleError('clearing consent', e)
     }
@@ -266,6 +236,6 @@ export const useCookieConsent = () => {
     clearConsent,
     initializeConsent,
     getConsentSummary,
-    isLocalStorageAvailable
+    isLocalStorageAvailable: CookieStorage.isAvailable
   }
 } 

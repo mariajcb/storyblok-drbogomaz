@@ -1,92 +1,94 @@
 <template>
-  <div 
-    v-if="showBanner"
-    class="cookie-banner"
-    role="dialog"
-    aria-labelledby="cookie-banner-title"
-    aria-describedby="cookie-banner-description"
-    aria-modal="true"
-    :aria-busy="isProcessing"
-  >
-    <!-- Focus trap for accessibility -->
-    <div class="cookie-banner__focus-trap" tabindex="-1" ref="focusTrap"></div>
-    
-    <div class="cookie-banner__container">
-      <div class="cookie-banner__content">
-        <div class="cookie-banner__text">
-          <h2 id="cookie-banner-title" class="cookie-banner__title">
-            We Value Your Privacy
-          </h2>
-          <p id="cookie-banner-description" class="cookie-banner__description">
-            This therapy website uses cookies to help us understand how visitors use our site and improve your experience. 
-            We only use analytics cookies that help us make our website better - we don't collect personal health information 
-            or use cookies for advertising. Your privacy and confidentiality are important to us.
-          </p>
-          
-          <!-- Error message for accessibility -->
-          <div v-if="error" class="cookie-banner__error" role="alert" aria-live="polite">
-            <p class="cookie-banner__error-text">
-              {{ error }}
+  <ClientOnly>
+    <div 
+      v-if="showBanner"
+      class="cookie-banner"
+      role="dialog"
+      aria-labelledby="cookie-banner-title"
+      aria-describedby="cookie-banner-description"
+      aria-modal="true"
+      :aria-busy="isProcessing"
+    >
+      <!-- Focus trap for accessibility -->
+      <div class="cookie-banner__focus-trap" tabindex="-1" ref="focusTrap"></div>
+      
+      <div class="cookie-banner__container">
+        <div class="cookie-banner__content">
+          <div class="cookie-banner__text">
+            <h2 id="cookie-banner-title" class="cookie-banner__title">
+              We Value Your Privacy
+            </h2>
+            <p id="cookie-banner-description" class="cookie-banner__description">
+              This therapy website uses cookies to help us understand how visitors use our site and improve your experience. 
+              We only use analytics cookies that help us make our website better - we don't collect personal health information 
+              or use cookies for advertising. Your privacy and confidentiality are important to us.
             </p>
+            
+            <!-- Error message for accessibility -->
+            <div v-if="error" class="cookie-banner__error" role="alert" aria-live="polite">
+              <p class="cookie-banner__error-text">
+                {{ error }}
+              </p>
+            </div>
+            
+            <div class="cookie-banner__links">
+              <NuxtLink 
+                to="/privacy" 
+                class="cookie-banner__link"
+                @click="handlePrivacyClick"
+                aria-describedby="privacy-link-description"
+              >
+                Learn more about our privacy practices
+              </NuxtLink>
+              <span id="privacy-link-description" class="sr-only">
+                Opens our privacy policy page in a new section
+              </span>
+            </div>
           </div>
           
-          <div class="cookie-banner__links">
-            <NuxtLink 
-              to="/privacy" 
-              class="cookie-banner__link"
-              @click="handlePrivacyClick"
-              aria-describedby="privacy-link-description"
+          <div class="cookie-banner__actions">
+            <button
+              type="button"
+              class="cookie-banner__btn cookie-banner__btn--reject"
+              @click="handleReject"
+              :disabled="isProcessing"
+              :aria-describedby="isProcessing ? 'processing-description' : 'reject-description'"
+              ref="rejectButton"
             >
-              Learn more about our privacy practices
-            </NuxtLink>
-            <span id="privacy-link-description" class="sr-only">
-              Opens our privacy policy page in a new section
-            </span>
-          </div>
-        </div>
-        
-        <div class="cookie-banner__actions">
-          <button
-            type="button"
-            class="cookie-banner__btn cookie-banner__btn--reject"
-            @click="handleReject"
-            :disabled="isProcessing"
-            :aria-describedby="isProcessing ? 'processing-description' : 'reject-description'"
-            ref="rejectButton"
-          >
-            <span v-if="isProcessing" aria-hidden="true">Processing...</span>
-            <span v-else>Reject All</span>
-          </button>
-          
-          <button
-            type="button"
-            class="cookie-banner__btn cookie-banner__btn--accept"
-            @click="handleAccept"
-            :disabled="isProcessing"
-            :aria-describedby="isProcessing ? 'processing-description' : 'accept-description'"
-            ref="acceptButton"
-          >
-            <span v-if="isProcessing" aria-hidden="true">Processing...</span>
-            <span v-else>Accept All</span>
-          </button>
-          
-          <!-- Screen reader descriptions -->
-          <div class="sr-only">
-            <span id="processing-description">Please wait while we process your cookie preferences</span>
-            <span id="reject-description">Reject all analytics cookies and continue with essential cookies only</span>
-            <span id="accept-description">Accept all cookies including analytics for improved website experience</span>
+              <span v-if="isProcessing" aria-hidden="true">Processing...</span>
+              <span v-else>Reject All</span>
+            </button>
+            
+            <button
+              type="button"
+              class="cookie-banner__btn cookie-banner__btn--accept"
+              @click="handleAccept"
+              :disabled="isProcessing"
+              :aria-describedby="isProcessing ? 'processing-description' : 'accept-description'"
+              ref="acceptButton"
+            >
+              <span v-if="isProcessing" aria-hidden="true">Processing...</span>
+              <span v-else>Accept All</span>
+            </button>
+            
+            <!-- Screen reader descriptions -->
+            <div class="sr-only">
+              <span id="processing-description">Please wait while we process your cookie preferences</span>
+              <span id="reject-description">Reject all analytics cookies and continue with essential cookies only</span>
+              <span id="accept-description">Accept all cookies including analytics for improved website experience</span>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </ClientOnly>
 </template>
 
 <script setup>
-import { ref, computed, onMounted, nextTick } from 'vue'
+import { ref, computed, onMounted, onUnmounted, nextTick, watch } from 'vue'
 
 // Get cookie consent composable with error handling
-const { hasResponded, acceptAll, rejectAll, error: consentError } = useCookieConsent()
+const { hasResponded, acceptAll, rejectAll, error: consentError, isLoaded } = useCookieConsent()
 
 // Get gtag for tracking consent decisions
 const { $gtag } = useNuxtApp()
@@ -103,7 +105,8 @@ const acceptButton = ref(null)
 
 // Computed properties
 const showBanner = computed(() => {
-  return process.client && !hasResponded() && !hasInteracted.value
+  // Only show banner on client side after consent is loaded
+  return process.client && isLoaded.value && !hasResponded() && !hasInteracted.value
 })
 
 // Error handling utility
