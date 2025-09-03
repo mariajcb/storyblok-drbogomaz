@@ -1,5 +1,6 @@
 import { ref, readonly, nextTick } from 'vue'
 import { CookieStorage } from '~/utils/cookieStorage'
+import { ConsentValidation } from '~/utils/consentValidation'
 
 export const useCookieConsent = () => {
   const consent = ref(null)
@@ -10,6 +11,7 @@ export const useCookieConsent = () => {
   // Constants for cookie consent management
   const CONSENT_VERSION = '1.1'
   const CONSENT_DURATION = 365 * 24 * 60 * 60 * 1000 // 1 year in milliseconds
+  const CONSENT_RENEWAL_THRESHOLD_DAYS = 365 // Renew consent after 1 year
   const STORAGE_KEY = 'cookie-consent'
   const FALLBACK_KEY = 'cookie-consent-fallback'
 
@@ -74,11 +76,8 @@ export const useCookieConsent = () => {
 
       const stored = CookieStorage.get(STORAGE_KEY)
       if (stored) {
-        // Validate consent data structure
-        if (stored && typeof stored.analytics === 'boolean' && stored.timestamp) {
-          // Check if consent has expired
-          const consentAge = Date.now() - new Date(stored.timestamp).getTime()
-          if (consentAge > CONSENT_DURATION) {
+        if (ConsentValidation.validateConsentData(stored)) {
+          if (ConsentValidation.isConsentExpired(stored.timestamp, CONSENT_DURATION)) {
             console.log('Cookie consent expired, clearing old consent')
             clearConsent()
           } else {
@@ -106,13 +105,7 @@ export const useCookieConsent = () => {
   const saveConsent = async (userConsent, consentType = 'explicit') => {
     if (!process.client) return
 
-    const consentData = {
-      analytics: userConsent,
-      timestamp: new Date().toISOString(),
-      version: CONSENT_VERSION,
-      consentType, // 'explicit' or 'implicit'
-      dataRetention: '26 months for analytics, 1 year for consent preferences'
-    }
+    const consentData = ConsentValidation.createConsentData(userConsent, consentType, CONSENT_VERSION)
 
     try {
       if (CookieStorage.isAvailable()) {
@@ -168,15 +161,13 @@ export const useCookieConsent = () => {
 
   // Get consent age in days
   const getConsentAge = () => {
-    if (!consent.value?.timestamp) return null
-    const age = Date.now() - new Date(consent.value.timestamp).getTime()
-    return Math.floor(age / (1000 * 60 * 60 * 24))
+    return ConsentValidation.getConsentAgeInDays(consent.value?.timestamp)
   }
 
   // Check if consent needs renewal
   const needsRenewal = () => {
     const age = getConsentAge()
-    return age !== null && age > 365 // Renew after 1 year
+    return age !== null && age > CONSENT_RENEWAL_THRESHOLD_DAYS // Renew after 1 year
   }
 
   // Clear consent (for testing or user request)
