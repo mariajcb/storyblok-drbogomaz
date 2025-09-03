@@ -50,6 +50,50 @@ export const useCookieConsent = () => {
     })
   }
 
+  // Consent initialization helpers
+  const handleStorageFailure = (fallback) => {
+    if (fallback) {
+      consent.value = fallback
+    }
+  }
+
+  const processStoredConsent = (stored) => {
+    if (stored) {
+      if (ConsentValidation.validateConsentData(stored)) {
+        if (ConsentValidation.isConsentExpired(stored.timestamp, CONSENT_DURATION)) {
+          console.log('Cookie consent expired, clearing old consent')
+          clearConsent()
+        } else {
+          consent.value = stored
+        }
+      } else {
+        console.warn('Invalid cookie consent data structure, resetting')
+        clearConsent()
+      }
+    }
+  }
+
+  const initializeFromFallback = () => {
+    console.warn('localStorage not available, using session storage fallback')
+    const fallback = CookieStorage.getFallback()
+    if (fallback) {
+      consent.value = fallback
+    }
+    isLoaded.value = true
+  }
+
+  // Consent storage helpers
+  const saveConsentToStorage = (consentData) => {
+    if (CookieStorage.isAvailable()) {
+      CookieStorage.set(STORAGE_KEY, consentData)
+      // Also save to fallback storage for redundancy
+      CookieStorage.setFallback(consentData)
+    } else {
+      // Use fallback storage only
+      CookieStorage.setFallback(consentData)
+    }
+  }
+
   // Initialize consent state from localStorage with error handling
   const initializeConsent = async () => {
     if (isInitializing.value) return
@@ -65,36 +109,17 @@ export const useCookieConsent = () => {
     try {
       // Check if localStorage is available
       if (!CookieStorage.isAvailable()) {
-        console.warn('localStorage not available, using session storage fallback')
-        const fallback = CookieStorage.getFallback()
-        if (fallback) {
-          consent.value = fallback
-        }
-        isLoaded.value = true
+        initializeFromFallback()
         return
       }
 
       const stored = CookieStorage.get(STORAGE_KEY)
-      if (stored) {
-        if (ConsentValidation.validateConsentData(stored)) {
-          if (ConsentValidation.isConsentExpired(stored.timestamp, CONSENT_DURATION)) {
-            console.log('Cookie consent expired, clearing old consent')
-            clearConsent()
-          } else {
-            consent.value = stored
-          }
-        } else {
-          console.warn('Invalid cookie consent data structure, resetting')
-          clearConsent()
-        }
-      }
+      processStoredConsent(stored)
     } catch (e) {
       handleError('initialization', e)
       // Try fallback storage
       const fallback = CookieStorage.getFallback()
-      if (fallback) {
-        consent.value = fallback
-      }
+      handleStorageFailure(fallback)
     } finally {
       isLoaded.value = true
       isInitializing.value = false
@@ -108,14 +133,7 @@ export const useCookieConsent = () => {
     const consentData = ConsentValidation.createConsentData(userConsent, consentType, CONSENT_VERSION)
 
     try {
-      if (CookieStorage.isAvailable()) {
-        CookieStorage.set(STORAGE_KEY, consentData)
-        // Also save to fallback storage for redundancy
-        CookieStorage.setFallback(consentData)
-      } else {
-        // Use fallback storage only
-        CookieStorage.setFallback(consentData)
-      }
+      saveConsentToStorage(consentData)
       
       consent.value = consentData
       error.value = null
@@ -129,7 +147,7 @@ export const useCookieConsent = () => {
     } catch (e) {
       handleError('saving consent', e)
       // Try fallback storage
-      CookieStorage.setFallback(consentData)
+      saveConsentToStorage(consentData)
       consent.value = consentData
     }
   }
