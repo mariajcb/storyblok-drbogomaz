@@ -14,13 +14,13 @@ export const ConsentValidation = {
     return consentAge > consentDuration
   },
 
-  createConsentData(userConsent, consentType, consentVersion) {
+  createConsentData(userConsent, consentType, consentVersion, dataRetention) {
     return {
       analytics: userConsent,
       timestamp: new Date().toISOString(),
       version: consentVersion,
       consentType,
-      dataRetention: '26 months for analytics, 1 year for consent preferences'
+      dataRetention
     }
   },
 
