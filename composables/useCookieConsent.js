@@ -1,79 +1,105 @@
+import { ref, readonly, nextTick } from 'vue'
+import { CookieStorage } from '~/utils/cookieStorage'
+import { ConsentValidation } from '~/utils/consentValidation'
+import { CookieConsentConfig } from '~/utils/cookieConsentConfig'
+import { Logger } from '~/utils/logger'
+
 export const useCookieConsent = () => {
   const consent = ref(null)
   const isLoaded = ref(false)
   const error = ref(null)
   const isInitializing = ref(false)
 
-  // Constants for cookie consent management
-  const CONSENT_VERSION = '1.1'
-  const CONSENT_DURATION = 365 * 24 * 60 * 60 * 1000 // 1 year in milliseconds
-  const STORAGE_KEY = 'cookie-consent'
-  const FALLBACK_KEY = 'cookie-consent-fallback'
+  // Utility functions
+  const isClient = () => process.client
+  const isLocalStorageAvailable = () => CookieStorage.isAvailable()
+  
+  const updateConsentState = (newConsent, clearError = true) => {
+    consent.value = newConsent
+    if (clearError) error.value = null
+  }
 
-  // Error handling utility
-  const handleError = (operation, err) => {
+  const trackAnalyticsEvent = (eventName, eventParameters) => {
+    if (!isClient() || !window.gtag || typeof window.gtag !== 'function') {
+      return
+    }
+
+    try {
+      window.gtag('event', eventName, {
+        ...eventParameters,
+        page_location: window.location.pathname,
+        content_type: CookieConsentConfig.ANALYTICS.CONTENT_TYPE
+      })
+    } catch (e) {
+      // Silently fail to avoid circular dependency issues
+      Logger.analyticsFailure(eventName, e)
+    }
+  }
+
+  const handleError = (operation, err, context = {}) => {
     const errorMessage = `Cookie consent ${operation} failed: ${err.message}`
-    console.error(errorMessage, err)
+    Logger.error(errorMessage, err)
+    
     error.value = {
       operation,
       message: errorMessage,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
+      context,
+      originalError: err.message
     }
     
-    // Track error for monitoring
-    if (process.client && window.gtag) {
-      window.gtag('event', 'cookie_consent_error', {
-        error_operation: operation,
-        error_message: err.message,
-        page_location: window.location.pathname,
-        content_type: 'therapy_website'
-      })
+    trackAnalyticsEvent(CookieConsentConfig.ANALYTICS.EVENTS.CONSENT_ERROR, {
+      error_operation: operation,
+      error_message: err.message,
+      error_context: JSON.stringify(context)
+    })
+  }
+
+  const processStoredConsent = (stored) => {
+    if (!stored) return
+    
+    if (!ConsentValidation.validateConsentData(stored)) {
+      Logger.warn('Invalid cookie consent data structure, resetting')
+      clearConsent()
+      return
+    }
+    
+    if (ConsentValidation.isConsentExpired(stored.timestamp, CookieConsentConfig.CONSENT.DURATION_MS)) {
+      Logger.info('Cookie consent expired, clearing old consent')
+      clearConsent()
+      return
+    }
+    
+    updateConsentState(stored)
+  }
+
+  const initializeFromFallback = () => {
+    Logger.warn('localStorage not available, using session storage fallback')
+    const fallback = CookieStorage.getFallback()
+    if (fallback) {
+      updateConsentState(fallback)
+    }
+    isLoaded.value = true
+  }
+
+  // Storage operations
+  const saveConsentToStorage = (consentData) => {
+    // Always save to fallback storage first as reliable backup
+    CookieStorage.setFallback(consentData)
+    
+    // Then attempt to save to localStorage if available
+    if (isLocalStorageAvailable()) {
+      CookieStorage.set(CookieConsentConfig.STORAGE.KEY, consentData)
     }
   }
 
-  // Check if localStorage is available and working
-  const isLocalStorageAvailable = () => {
-    if (!process.client) return false
-    
-    try {
-      const testKey = '__localStorage_test__'
-      localStorage.setItem(testKey, 'test')
-      localStorage.removeItem(testKey)
-      return true
-    } catch (e) {
-      return false
-    }
-  }
-
-  // Fallback storage using sessionStorage
-  const getFallbackStorage = () => {
-    if (!process.client) return null
-    
-    try {
-      const fallback = sessionStorage.getItem(FALLBACK_KEY)
-      return fallback ? JSON.parse(fallback) : null
-    } catch (e) {
-      return null
-    }
-  }
-
-  const setFallbackStorage = (data) => {
-    if (!process.client) return
-    
-    try {
-      sessionStorage.setItem(FALLBACK_KEY, JSON.stringify(data))
-    } catch (e) {
-      handleError('fallback storage', e)
-    }
-  }
-
-  // Initialize consent state from localStorage with error handling
+  // Initialize consent state from storage with fallback handling
   const initializeConsent = async () => {
     if (isInitializing.value) return
     isInitializing.value = true
     error.value = null
 
-    if (!process.client) {
+    if (!isClient()) {
       isLoaded.value = true
       isInitializing.value = false
       return
@@ -82,40 +108,20 @@ export const useCookieConsent = () => {
     try {
       // Check if localStorage is available
       if (!isLocalStorageAvailable()) {
-        console.warn('localStorage not available, using session storage fallback')
-        const fallback = getFallbackStorage()
-        if (fallback) {
-          consent.value = fallback
-        }
-        isLoaded.value = true
+        initializeFromFallback()
         return
       }
 
-      const stored = localStorage.getItem(STORAGE_KEY)
-      if (stored) {
-        const parsed = JSON.parse(stored)
-        
-        // Validate consent data structure
-        if (parsed && typeof parsed.analytics === 'boolean' && parsed.timestamp) {
-                  // Check if consent has expired
-        const consentAge = Date.now() - new Date(parsed.timestamp).getTime()
-        if (consentAge > CONSENT_DURATION) {
-          console.log('Cookie consent expired, clearing old consent')
-          clearConsent()
-        } else {
-          consent.value = parsed
-        }
-        } else {
-          console.warn('Invalid cookie consent data structure, resetting')
-          clearConsent()
-        }
-      }
+      const stored = CookieStorage.get(CookieConsentConfig.STORAGE.KEY)
+      processStoredConsent(stored)
     } catch (e) {
-      handleError('initialization', e)
-      // Try fallback storage
-      const fallback = getFallbackStorage()
+      handleError('initialization', e, { 
+        localStorageAvailable: isLocalStorageAvailable(),
+        hasStoredData: false 
+      })
+      const fallback = CookieStorage.getFallback()
       if (fallback) {
-        consent.value = fallback
+        updateConsentState(fallback)
       }
     } finally {
       isLoaded.value = true
@@ -123,112 +129,86 @@ export const useCookieConsent = () => {
     }
   }
 
-  // Save consent to localStorage with error handling
+  // Save user consent with storage fallback
   const saveConsent = async (userConsent, consentType = 'explicit') => {
-    if (!process.client) return
+    if (!isClient()) return
 
-    const consentData = {
-      analytics: userConsent,
-      timestamp: new Date().toISOString(),
-      version: CONSENT_VERSION,
-      consentType, // 'explicit' or 'implicit'
-      dataRetention: '26 months for analytics, 1 year for consent preferences'
-    }
+    const consentData = ConsentValidation.createConsentData(
+      userConsent, 
+      consentType, 
+      CookieConsentConfig.CONSENT.VERSION, 
+      CookieConsentConfig.CONSENT.DATA_RETENTION
+    )
 
     try {
-      if (isLocalStorageAvailable()) {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(consentData))
-        // Also save to fallback storage for redundancy
-        setFallbackStorage(consentData)
-      } else {
-        // Use fallback storage only
-        setFallbackStorage(consentData)
-      }
-      
-      consent.value = consentData
-      error.value = null
+      saveConsentToStorage(consentData)
+      updateConsentState(consentData)
 
-      // Track consent for monitoring
-      if (window.gtag) {
-        window.gtag('event', 'cookie_consent_saved', {
-          consent_given: userConsent,
-          consent_type: consentType,
-          consent_version: CONSENT_VERSION,
-          page_location: window.location.pathname,
-          content_type: 'therapy_website'
-        })
-      }
+      trackAnalyticsEvent(CookieConsentConfig.ANALYTICS.EVENTS.CONSENT_SAVED, {
+        consent_given: userConsent,
+        consent_type: consentType,
+        consent_version: CookieConsentConfig.CONSENT.VERSION
+      })
     } catch (e) {
-      handleError('saving consent', e)
-      // Try fallback storage
-      setFallbackStorage(consentData)
-      consent.value = consentData
+      handleError('saving consent', e, { 
+        userConsent,
+        consentType,
+        localStorageAvailable: isLocalStorageAvailable()
+      })
+      // Even if storage fails, update the in-memory state
+      updateConsentState(consentData, false)
     }
   }
 
-  // Accept all cookies
   const acceptAll = async () => {
     await saveConsent(true, 'explicit')
   }
 
-  // Reject all cookies
   const rejectAll = async () => {
     await saveConsent(false, 'explicit')
   }
 
-  // Check if user has given consent
   const hasConsent = () => {
     return consent.value?.analytics === true
   }
 
-  // Check if consent has been given (either accept or reject)
   const hasResponded = () => {
     return consent.value !== null
   }
 
-  // Get consent timestamp
   const getConsentTimestamp = () => {
     return consent.value?.timestamp
   }
 
-  // Get consent age in days
   const getConsentAge = () => {
-    if (!consent.value?.timestamp) return null
-    const age = Date.now() - new Date(consent.value.timestamp).getTime()
-    return Math.floor(age / (1000 * 60 * 60 * 24))
+    return ConsentValidation.getConsentAgeInDays(consent.value?.timestamp)
   }
 
-  // Check if consent needs renewal
   const needsRenewal = () => {
     const age = getConsentAge()
-    return age !== null && age > 365 // Renew after 1 year
+    return age !== null && age > CookieConsentConfig.CONSENT.RENEWAL_THRESHOLD_DAYS
   }
 
-  // Clear consent (for testing or user request)
   const clearConsent = () => {
-    if (!process.client) return
+    if (!isClient()) return
 
     try {
       if (isLocalStorageAvailable()) {
-        localStorage.removeItem(STORAGE_KEY)
+        CookieStorage.remove(CookieConsentConfig.STORAGE.KEY)
       }
-      sessionStorage.removeItem(FALLBACK_KEY)
-      consent.value = null
-      error.value = null
+      CookieStorage.removeFallback()
+      updateConsentState(null)
 
       // Track consent clearing for monitoring
-      if (window.gtag) {
-        window.gtag('event', 'cookie_consent_cleared', {
-          page_location: window.location.pathname,
-          content_type: 'therapy_website'
-        })
-      }
+      trackAnalyticsEvent(CookieConsentConfig.ANALYTICS.EVENTS.CONSENT_CLEARED)
     } catch (e) {
-      handleError('clearing consent', e)
+      handleError('clearing consent', e, { 
+        localStorageAvailable: isLocalStorageAvailable(),
+        hadConsent: !!consent.value
+      })
     }
   }
 
-  // Get consent summary for monitoring
   const getConsentSummary = () => {
     if (!consent.value) return null
 
@@ -244,7 +224,7 @@ export const useCookieConsent = () => {
   }
 
   // Initialize on client side with performance optimization
-  if (process.client) {
+  if (isClient()) {
     // Use nextTick to avoid blocking initial render
     nextTick(() => {
       initializeConsent()
