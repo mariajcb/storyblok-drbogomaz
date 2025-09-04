@@ -1,38 +1,19 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-export default {
-  css: ['@/assets/css/roboto.css'],
-
+export default defineNuxtConfig({
+  devtools: { enabled: true },
+  css: ['~/assets/css/tailwind.css', '~/assets/css/roboto.css'],
   modules: [
-    [
-      '@storyblok/nuxt',
-      {
-        accessToken: process.env.STORYBLOK_API_TOKEN,
-        apiOptions: {
-          region: 'eu'
-        }
-      },
-    ],
     '@nuxtjs/tailwindcss',
+    '@storyblok/nuxt'
   ],
-
-  runtimeConfig: {
-    public: {
-      storyblokApiToken: process.env.STORYBLOK_API_TOKEN,
-      gaMeasurementId: process.env.GA_MEASUREMENT_ID
-    }
-  },
-
-  compatibilityDate: '2025-04-17',
-
   storyblok: {
-    accessToken: process.env.STORYBLOK_API_TOKEN,
-    apiOptions: {
-      region: 'us'
-    },
-    components: {
-      teaser: './storyblok/Teaser.vue',
-      bio: './storyblok/Bio.vue',
-      blog: './storyblok/Blog.vue'
-    }
+    accessToken: process.env.STORYBLOK_ACCESS_TOKEN
   },
-}
+  // Vitest configuration for testing
+  vite: {
+    test: {
+      globals: true,
+      environment: 'jsdom'
+    }
+  }
+})
