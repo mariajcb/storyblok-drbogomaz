@@ -29,6 +29,7 @@
     "@nuxtjs/tailwindcss": "^6.11.4",
     "@storyblok/nuxt": "^6.2.4",
     "@testing-library/vue": "^8.1.0",
+    "@vitest/coverage-v8": "^3.2.4",
     "@vue/test-utils": "^2.4.6",
     "jsdom": "^26.1.0",
     "nuxt": "^3.16.2",
