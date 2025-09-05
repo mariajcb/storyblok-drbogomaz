@@ -1,5 +1,5 @@
 <template>
-  <header class="w-full h-24 bg-[#718FCB]">
+  <header class="w-full h-24 bg-primary-500">
     <div class="container h-full mx-auto flex items-center justify-between px-4">
       <NuxtLink to="/">
         <h1 class="top-header__logo">Dr.Bogomaz</h1>

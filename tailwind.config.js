@@ -88,10 +88,6 @@ module.exports = {
                 'max': 'max-content',
                 'fit': 'fit-content',
                 'prose': '65ch',
-                'luxury-sm': '28rem',   // 448px - Small luxury containers
-                'luxury-md': '48rem',   // 768px - Medium luxury containers
-                'luxury-lg': '64rem',   // 1024px - Large luxury containers
-                'luxury-xl': '80rem',   // 1280px - Extra large luxury containers
             },
             container: {
                 center: true,
@@ -108,6 +104,129 @@ module.exports = {
                     lg: '1024px',
                     xl: '1280px',
                     '2xl': '1400px',
+                },
+            },
+            colors: {
+                // Primary Colors - Sophisticated Blue Palette
+                primary: {
+                    50: '#f0f4ff',
+                    100: '#e0e9ff',
+                    200: '#c7d6ff',
+                    300: '#a5b8ff',
+                    400: '#8190ff',
+                    500: '#718FCB', // Main brand color
+                    600: '#5a73b8',
+                    700: '#4a5fa3',
+                    800: '#3d4f8e',
+                    900: '#34417a',
+                    950: '#1f2a4a',
+                },
+                // Secondary Colors - Elegant Teal Palette
+                secondary: {
+                    50: '#f0fdfa',
+                    100: '#ccfbf1',
+                    200: '#99f6e4',
+                    300: '#5eead4',
+                    400: '#2dd4bf',
+                    500: '#50b0ae', // Main secondary color
+                    600: '#0d9488',
+                    700: '#0f766e',
+                    800: '#115e59',
+                    900: '#134e4a',
+                    950: '#042f2e',
+                },
+                // Neutral Grays with Warm Undertones
+                neutral: {
+                    50: '#fafaf9',
+                    100: '#f5f5f4',
+                    200: '#e7e5e4',
+                    300: '#d6d3d1',
+                    400: '#a8a29e',
+                    500: '#78716c',
+                    600: '#57534e',
+                    700: '#44403c',
+                    800: '#292524',
+                    900: '#1c1917',
+                    950: '#0c0a09',
+                },
+                // Accent Colors for Highlights
+                accent: {
+                    gold: {
+                        50: '#fffbeb',
+                        100: '#fef3c7',
+                        200: '#fde68a',
+                        300: '#fcd34d',
+                        400: '#fbbf24',
+                        500: '#f59e0b',
+                        600: '#d97706',
+                        700: '#b45309',
+                        800: '#92400e',
+                        900: '#78350f',
+                    },
+                    rose: {
+                        50: '#fff1f2',
+                        100: '#ffe4e6',
+                        200: '#fecdd3',
+                        300: '#fda4af',
+                        400: '#fb7185',
+                        500: '#f43f5e',
+                        600: '#e11d48',
+                        700: '#be123c',
+                        800: '#9f1239',
+                        900: '#881337',
+                    },
+                },
+                // Semantic Colors
+                success: {
+                    50: '#f0fdf4',
+                    100: '#dcfce7',
+                    200: '#bbf7d0',
+                    300: '#86efac',
+                    400: '#4ade80',
+                    500: '#22c55e',
+                    600: '#16a34a',
+                    700: '#15803d',
+                    800: '#166534',
+                    900: '#14532d',
+                },
+                warning: {
+                    50: '#fffbeb',
+                    100: '#fef3c7',
+                    200: '#fde68a',
+                    300: '#fcd34d',
+                    400: '#fbbf24',
+                    500: '#f59e0b',
+                    600: '#d97706',
+                    700: '#b45309',
+                    800: '#92400e',
+                    900: '#78350f',
+                },
+                error: {
+                    50: '#fef2f2',
+                    100: '#fee2e2',
+                    200: '#fecaca',
+                    300: '#fca5a5',
+                    400: '#f87171',
+                    500: '#ef4444',
+                    600: '#dc2626',
+                    700: '#b91c1c',
+                    800: '#991b1b',
+                    900: '#7f1d1d',
+                },
+                // Background Colors
+                background: {
+                    primary: '#ffffff',
+                    secondary: '#fafaf9',
+                    tertiary: '#f5f5f4',
+                    dark: '#1c1917',
+                },
+                // Text Colors
+                text: {
+                    primary: '#1c1917',
+                    secondary: '#44403c',
+                    tertiary: '#78716c',
+                    inverse: '#ffffff',
+                    muted: '#a8a29e',
                 },
             },
         },

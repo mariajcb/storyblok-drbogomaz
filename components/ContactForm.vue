@@ -1,74 +1,74 @@
 <template lang="html">
   <div class="max-w-2xl mx-auto px-4 py-10">
     <form v-if="!status" @submit="onSubmit" class="space-y-6">
-      <h1 class="text-3xl font-bold text-[#718FCB] mb-4">Contact Me</h1>
-      <p class="text-gray-600 mb-8">Please use this form for general information purposes only. DO NOT send personal health information through this form. Specific client care will be addressed during your appointment. If this is an emergency, please call 911.</p>
+      <h1 class="text-3xl font-bold text-primary-500 mb-4">Contact Me</h1>
+      <p class="text-neutral-600 mb-8">Please use this form for general information purposes only. DO NOT send personal health information through this form. Specific client care will be addressed during your appointment. If this is an emergency, please call 911.</p>
 
       <div class="space-y-2">
-        <label class="block text-sm font-medium text-gray-700">Name</label>
+        <label class="block text-sm font-medium text-neutral-700">Name</label>
         <div>
           <input
             v-model="name"
             name="name"
             type="text"
             placeholder="Type your name here"
-            class="mt-1 block w-full rounded-md border px-3 py-2 focus:border-[#718FCB] focus:outline-none focus:ring-1 focus:ring-[#718FCB]"
-            :class="{ 'border-red-500': nameError && nameTouched }"
+            class="mt-1 block w-full rounded-md border border-neutral-300 px-3 py-2 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500"
+            :class="{ 'border-error-500': nameError && nameTouched }"
             @blur="nameTouched = true"
           >
         </div>
-        <p v-if="nameError && nameTouched" class="mt-1 text-sm text-red-600">{{ nameError }}</p>
+        <p v-if="nameError && nameTouched" class="mt-1 text-sm text-error-600">{{ nameError }}</p>
       </div>
 
       <div class="space-y-2">
-        <label class="block text-sm font-medium text-gray-700">Phone</label>
+        <label class="block text-sm font-medium text-neutral-700">Phone</label>
         <div>
           <input
             v-model="phone"
             name="phone"
             type="text"
             placeholder="(xxx)xxx-xxxx"
-            class="mt-1 block w-full rounded-md border px-3 py-2 focus:border-[#718FCB] focus:outline-none focus:ring-1 focus:ring-[#718FCB]"
-            :class="{ 'border-red-500': phoneError && phoneTouched }"
+            class="mt-1 block w-full rounded-md border border-neutral-300 px-3 py-2 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500"
+            :class="{ 'border-error-500': phoneError && phoneTouched }"
             @blur="phoneTouched = true"
           >
         </div>
-        <p v-if="phoneError && phoneTouched" class="mt-1 text-sm text-red-600">{{ phoneError }}</p>
+        <p v-if="phoneError && phoneTouched" class="mt-1 text-sm text-error-600">{{ phoneError }}</p>
       </div>
 
       <div class="space-y-2">
-        <label class="block text-sm font-medium text-gray-700">Email</label>
+        <label class="block text-sm font-medium text-neutral-700">Email</label>
         <div>
           <input
             v-model="email"
             name="email"
             type="email"
-            class="mt-1 block w-full rounded-md border px-3 py-2 focus:border-[#718FCB] focus:outline-none focus:ring-1 focus:ring-[#718FCB]"
-            :class="{ 'border-red-500': emailError && emailTouched }"
+            class="mt-1 block w-full rounded-md border border-neutral-300 px-3 py-2 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500"
+            :class="{ 'border-error-500': emailError && emailTouched }"
             @blur="emailTouched = true"
           >
         </div>
-        <p v-if="emailError && emailTouched" class="mt-1 text-sm text-red-600">{{ emailError }}</p>
+        <p v-if="emailError && emailTouched" class="mt-1 text-sm text-error-600">{{ emailError }}</p>
       </div>
 
       <div class="space-y-2">
-        <label class="block text-sm font-medium text-gray-700">Message</label>
+        <label class="block text-sm font-medium text-neutral-700">Message</label>
         <div>
           <textarea
             v-model="message"
             name="message"
             rows="4"
-            class="mt-1 block w-full rounded-md border px-3 py-2 focus:border-[#718FCB] focus:outline-none focus:ring-1 focus:ring-[#718FCB]"
-            :class="{ 'border-red-500': messageError && messageTouched }"
+            class="mt-1 block w-full rounded-md border border-neutral-300 px-3 py-2 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500"
+            :class="{ 'border-error-500': messageError && messageTouched }"
             @blur="messageTouched = true"
           ></textarea>
         </div>
-        <p v-if="messageError && messageTouched" class="mt-1 text-sm text-red-600">{{ messageError }}</p>
+        <p v-if="messageError && messageTouched" class="mt-1 text-sm text-error-600">{{ messageError }}</p>
       </div>
 
       <button
         type="submit"
-        class="w-full bg-[#718FCB] text-white py-2 px-4 rounded-md hover:bg-[#50b0ae] transition-colors duration-200"
+        class="w-full bg-primary-500 text-white py-3 px-6 rounded-md hover:bg-secondary-500 transition-colors duration-200 font-medium"
         :disabled="isSubmitting"
       >
         {{ isSubmitting ? 'Sending...' : 'Send Message' }}
@@ -76,13 +76,13 @@
     </form>
 
     <div v-else-if="status === 'success'" class="text-center py-8">
-      <h2 class="text-2xl font-bold text-green-600 mb-4">Thank you!</h2>
-      <p class="text-gray-600">Your message has been sent successfully.</p>
+      <h2 class="text-2xl font-bold text-success-600 mb-4">Thank you!</h2>
+      <p class="text-neutral-600">Your message has been sent successfully.</p>
     </div>
 
     <div v-else-if="status === 'error'" class="text-center py-8">
-      <h2 class="text-2xl font-bold text-red-600 mb-4">Error</h2>
-      <p class="text-gray-600">There was an error sending your message. Please try again later.</p>
+      <h2 class="text-2xl font-bold text-error-600 mb-4">Error</h2>
+      <p class="text-neutral-600">There was an error sending your message. Please try again later.</p>
     </div>
   </div>
 </template>
