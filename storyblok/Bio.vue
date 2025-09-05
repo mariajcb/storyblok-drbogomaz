@@ -34,11 +34,14 @@
           </div>
         </div>
         <div class="text-center mt-8">
-          <NuxtLink
-            class="inline-block bg-[#718FCB] text-white px-6 py-3 rounded font-medium hover:bg-white hover:text-[#718FCB] transition-colors"
-            to="/en/contact">
+          <BaseButton
+            tag="NuxtLink"
+            to="/en/contact"
+            variant="primary"
+            size="lg"
+          >
             {{ blok.call_to_action_btn }}
-          </NuxtLink>
+          </BaseButton>
         </div>
       </div>
     </div>
@@ -46,6 +49,8 @@
 </template>
 
 <script setup>
+import BaseButton from '~/components/ui/BaseButton.vue'
+
 const props = defineProps({
   blok: {
     type: Object,

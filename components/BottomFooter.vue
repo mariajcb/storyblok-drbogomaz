@@ -6,18 +6,20 @@
           <p class="text-sm text-gray-600">© 2025 Dr. Misha Bogomaz. All rights reserved.</p>
         </div>
         <div class="flex flex-wrap gap-6 text-sm">
+          <BaseButton 
+            variant="ghost"
+            size="sm"
+            @click="showCookiePreferences"
+            class="text-primary-500 hover:text-secondary-500 p-0 -mt-2 h-auto"
+          >
+            Cookie Preferences
+          </BaseButton>
           <NuxtLink 
             to="/privacy" 
             class="text-[#718FCB] hover:text-[#50b0ae] transition-colors"
           >
             Privacy Policy
           </NuxtLink>
-          <button 
-            @click="showCookiePreferences"
-            class="text-[#718FCB] hover:text-[#50b0ae] transition-colors bg-transparent border-none cursor-pointer"
-          >
-            Cookie Preferences
-          </button>
           <NuxtLink 
             to="/contact" 
             class="text-[#718FCB] hover:text-[#50b0ae] transition-colors"
@@ -37,6 +39,8 @@
 </template>
 
 <script setup>
+import BaseButton from '~/components/ui/BaseButton.vue'
+
 // Get cookie consent composable
 const { hasResponded } = useCookieConsent()
 

@@ -47,29 +47,29 @@
           </div>
           
           <div class="cookie-banner__actions">
-            <button
-              type="button"
-              class="cookie-banner__btn cookie-banner__btn--reject"
+            <BaseButton
+              variant="tertiary"
+              size="md"
               @click="handleReject"
               :disabled="isProcessing"
+              :loading="isProcessing"
               :aria-describedby="isProcessing ? 'processing-description' : 'reject-description'"
               ref="rejectButton"
             >
-              <span v-if="isProcessing" aria-hidden="true">Processing...</span>
-              <span v-else>Reject All</span>
-            </button>
+              Reject All
+            </BaseButton>
             
-            <button
-              type="button"
-              class="cookie-banner__btn cookie-banner__btn--accept"
+            <BaseButton
+              variant="primary"
+              size="md"
               @click="handleAccept"
               :disabled="isProcessing"
+              :loading="isProcessing"
               :aria-describedby="isProcessing ? 'processing-description' : 'accept-description'"
               ref="acceptButton"
             >
-              <span v-if="isProcessing" aria-hidden="true">Processing...</span>
-              <span v-else>Accept All</span>
-            </button>
+              Accept All
+            </BaseButton>
             
             <!-- Screen reader descriptions -->
             <div class="sr-only">
@@ -86,6 +86,7 @@
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted, nextTick, watch } from 'vue'
+import BaseButton from '~/components/ui/BaseButton.vue'
 
 // Get cookie consent composable with error handling
 const { hasResponded, acceptAll, rejectAll, error: consentError, isLoaded } = useCookieConsent()

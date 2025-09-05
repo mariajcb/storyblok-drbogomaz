@@ -66,7 +66,7 @@
         <p v-if="messageError && messageTouched" class="mt-1 text-sm text-error-600">{{ messageError }}</p>
       </div>
 
-      <Button
+      <BaseButton
         type="submit"
         variant="primary"
         size="lg"
@@ -75,7 +75,7 @@
         class="w-full"
       >
         {{ isSubmitting ? 'Sending...' : 'Send Message' }}
-      </Button>
+      </BaseButton>
     </form>
 
     <div v-else-if="status === 'success'" class="text-center py-8">
@@ -92,7 +92,7 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-import Button from '~/components/ui/Button.vue'
+import BaseButton from '~/components/ui/BaseButton.vue'
 
 const name = ref('')
 const phone = ref('')

@@ -6,13 +6,15 @@
     aria-modal="true"
     aria-label="Mobile navigation menu"
   >
-    <button
-      class="absolute top-4 right-4 text-white text-3xl focus:outline-none"
+    <BaseButton
+      variant="ghost"
+      size="sm"
+      class="absolute top-4 right-4 text-white text-3xl focus:outline-none p-2"
       @click="$emit('close')"
       aria-label="Close menu"
     >
       &times;
-    </button>
+    </BaseButton>
     <nav class="bg-[#718FCB] py-4">
       <ul class="container mx-auto px-4 space-y-4">
         <li>
@@ -48,8 +50,13 @@
 </template>
 
 <script>
+import BaseButton from '~/components/ui/BaseButton.vue'
+
 export default {
   name: 'MobileNavigationMenu',
+  components: {
+    BaseButton
+  },
   props: {
     isOpen: {
       type: Boolean,

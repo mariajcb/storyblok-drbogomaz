@@ -26,6 +26,10 @@
 <script setup>
 import { computed } from 'vue'
 
+defineOptions({
+  name: 'BaseButton'
+})
+
 const props = defineProps({
   variant: {
     type: String,

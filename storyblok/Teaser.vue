@@ -9,17 +9,22 @@
       <h1 class="text-5xl font-bold mb-4 drop-shadow-lg">{{ blok.headline || 'Default Title' }}</h1>
       <h2 class="text-2xl font-bold mb-4 drop-shadow-md"><strong>{{ blok.subtitle || 'Default Subtitle' }}</strong></h2>
       <p class="text-2xl mb-8 drop-shadow-md">{{ blok.body }}</p>
-      <NuxtLink 
-        class="inline-block bg-white text-[#718FCB] px-6 py-3 rounded font-medium hover:bg-[#718FCB] hover:text-white transition-colors" 
+      <BaseButton
+        tag="NuxtLink"
         to="/contact"
+        variant="tertiary"
+        size="lg"
+        class="bg-white text-primary-500 hover:bg-primary-500 hover:text-white"
       >
         Contact Me
-      </NuxtLink>
+      </BaseButton>
     </div>
   </div>
 </template>
 
 <script setup>
+import BaseButton from '~/components/ui/BaseButton.vue'
+
 const props = defineProps({
   blok: {
     type: Object,

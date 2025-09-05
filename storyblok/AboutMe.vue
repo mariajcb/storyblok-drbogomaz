@@ -14,12 +14,14 @@
     <div class="max-w-3xl mx-auto px-4">
       <div class="prose max-w-none" v-html="renderedText2"></div>
       <div class="text-center mt-6">
-        <NuxtLink 
-          class="inline-block bg-[#718FCB] text-white px-6 py-3 rounded font-medium hover:bg-white hover:text-[#718FCB] transition-colors" 
+        <BaseButton
+          tag="NuxtLink"
           to="/blog"
+          variant="primary"
+          size="lg"
         >
           {{ blok.call_to_action_btn }}
-        </NuxtLink>
+        </BaseButton>
       </div>
     </div>
   </div>
@@ -28,6 +30,7 @@
 <script setup>
 import { useMarkdown } from '~/composables/useMarkdown'
 import { computed } from 'vue'
+import BaseButton from '~/components/ui/BaseButton.vue'
 
 const props = defineProps({
   blok: {

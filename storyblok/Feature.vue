@@ -7,12 +7,14 @@
       </p>
     </div>
     <div class="mt-4">
-      <button 
-        class="w-full bg-[#718FCB] text-white px-6 py-2 rounded hover:bg-white hover:text-[#718FCB] transition-colors" 
+      <BaseButton 
+        variant="primary"
+        size="md"
+        class="w-full" 
         @click="isOpen = !isOpen"
       >
         Learn More
-      </button>
+      </BaseButton>
     </div>
 
     <!-- Modal -->
@@ -26,15 +28,17 @@
           <!-- Header -->
           <div class="bg-[#E8EFF5] px-4 py-3 sm:px-6 flex justify-between items-center">
             <h3 class="text-lg font-medium text-gray-900" id="modal-title">{{ blok.name }}</h3>
-            <button 
-              class="text-gray-400 hover:text-gray-500" 
+            <BaseButton 
+              variant="ghost"
+              size="sm"
+              class="text-gray-400 hover:text-gray-500 p-2" 
               @click="isOpen = false"
             >
               <span class="sr-only">Close</span>
               <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
               </svg>
-            </button>
+            </BaseButton>
           </div>
 
           <!-- Content -->
@@ -44,18 +48,21 @@
 
           <!-- Footer -->
           <div class="bg-[#E8EFF5] px-4 py-3 sm:px-6 flex justify-end space-x-3">
-            <button 
-              class="bg-white text-[#718FCB] px-4 py-2 rounded hover:bg-[#718FCB] hover:text-white transition-colors"
+            <BaseButton 
+              variant="tertiary"
+              size="md"
               @click="isOpen = false"
             >
               Cancel
-            </button>
-            <NuxtLink 
+            </BaseButton>
+            <BaseButton
+              tag="NuxtLink"
               to="/en/contact"
-              class="bg-[#718FCB] text-white px-4 py-2 rounded hover:bg-white hover:text-[#718FCB] transition-colors"
+              variant="primary"
+              size="md"
             >
               Book Session
-            </NuxtLink>
+            </BaseButton>
           </div>
         </div>
       </div>
@@ -66,6 +73,7 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { useMarkdown } from '~/composables/useMarkdown'
+import BaseButton from '~/components/ui/BaseButton.vue'
 
 const props = defineProps({
   blok: {
