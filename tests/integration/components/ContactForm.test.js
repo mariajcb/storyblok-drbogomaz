@@ -6,7 +6,6 @@ describe('ContactForm Integration', () => {
   let mockFetch
 
   beforeEach(() => {
-    // Mock the global fetch function
     mockFetch = vi.fn()
     global.fetch = mockFetch
   })

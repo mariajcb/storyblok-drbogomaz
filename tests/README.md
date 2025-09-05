@@ -166,24 +166,6 @@ it('should navigate to correct route', async () => {
 })
 ```
 
-## Troubleshooting
-
-### Common Issues
-
-1. **Component not found**: Check import paths and component registration
-2. **Test environment issues**: Ensure jsdom is properly configured
-3. **Async test failures**: Use `await wrapper.vm.$nextTick()` for Vue updates
-4. **Mock not working**: Check if mocks are properly set up in test setup
-
-### Debug Mode
-```bash
-# Run specific test file with verbose output
-npm run test:run -- --reporter=verbose tests/integration/components/ContactForm.test.js
-
-# Run tests with console.log output
-npm run test:run -- --reporter=verbose --no-coverage
-```
-
 ## Resources
 
 - [Vitest Documentation](https://vitest.dev/)
