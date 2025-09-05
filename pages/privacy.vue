@@ -146,12 +146,14 @@
             <p class="text-sm text-gray-600 mb-3">
               Manage your cookie settings and update your preferences at any time.
             </p>
-            <NuxtLink 
-              to="/cookie-preferences" 
-              class="inline-block bg-[#718FCB] text-white px-6 py-2 rounded hover:bg-white hover:text-[#718FCB] transition-colors text-sm font-medium"
+            <BaseButton
+              tag="NuxtLink"
+              to="/cookie-preferences"
+              variant="primary"
+              size="sm"
             >
               Manage Cookie Preferences
-            </NuxtLink>
+            </BaseButton>
           </div>
 
           <h3 class="text-xl font-semibold text-[#1d243d] mb-3">Third-Party Cookies</h3>
@@ -270,6 +272,8 @@
 </template>
 
 <script setup>
+import BaseButton from '~/components/ui/BaseButton.vue'
+
 // Set page title and meta description
 useHead({
   title: 'Privacy Policy - Dr. Misha Bogomaz',

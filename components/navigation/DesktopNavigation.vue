@@ -2,13 +2,13 @@
   <nav class="hidden lg:block">
     <ul class="flex space-x-8 text-lg font-bold">
       <li>
-        <NuxtLink to="/" class="text-white hover:text-[#50b0ae]">Home</NuxtLink>
+        <NuxtLink to="/" class="text-white hover:text-secondary-500">Home</NuxtLink>
       </li>
       <li>
-        <NuxtLink to="/blog" class="text-white hover:text-[#50b0ae]">Blog</NuxtLink>
+        <NuxtLink to="/blog" class="text-white hover:text-secondary-500">Blog</NuxtLink>
       </li>
       <li>
-        <NuxtLink to="/contact" class="text-white hover:text-[#50b0ae]">Contact</NuxtLink>
+        <NuxtLink to="/contact" class="text-white hover:text-secondary-500">Contact</NuxtLink>
       </li>
     </ul>
   </nav>

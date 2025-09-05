@@ -1,6 +1,8 @@
 <template>
-  <button 
-    class="lg:hidden p-2 text-white hover:bg-[#50b0ae] rounded-md focus:outline-none focus:ring-2 focus:ring-white"
+  <BaseButton 
+    variant="ghost"
+    size="sm"
+    class="lg:hidden p-2 text-white hover:bg-secondary-500 rounded-md focus:outline-none focus:ring-2 focus:ring-white"
     @click="$emit('toggle')"
     :aria-expanded="isOpen"
     aria-label="Toggle navigation menu"
@@ -20,12 +22,17 @@
         :class="{ '-rotate-45 -translate-y-2': isOpen }"
       ></span>
     </div>
-  </button>
+  </BaseButton>
 </template>
 
 <script>
+import BaseButton from '~/components/ui/BaseButton.vue'
+
 export default {
   name: 'NavigationHamburgerButton',
+  components: {
+    BaseButton
+  },
   props: {
     isOpen: {
       type: Boolean,

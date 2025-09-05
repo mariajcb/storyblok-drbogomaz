@@ -27,12 +27,13 @@
                   {{ currentStatus }}
                 </p>
               </div>
-              <button
+              <BaseButton
+                variant="primary"
+                size="md"
                 @click="updatePreferences"
-                class="bg-[#718FCB] text-white px-6 py-2 rounded hover:bg-white hover:text-[#718FCB] transition-colors"
               >
                 {{ updateButtonText }}
-              </button>
+              </BaseButton>
             </div>
           </div>
         </section>
@@ -98,6 +99,7 @@
 
 <script setup>
 import { computed } from 'vue'
+import BaseButton from '~/components/ui/BaseButton.vue'
 
 // Get cookie consent composable
 const { hasConsent, hasResponded, clearConsent } = useCookieConsent()
