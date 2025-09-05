@@ -66,13 +66,16 @@
         <p v-if="messageError && messageTouched" class="mt-1 text-sm text-error-600">{{ messageError }}</p>
       </div>
 
-      <button
+      <Button
         type="submit"
-        class="w-full bg-primary-500 text-white py-3 px-6 rounded-md hover:bg-secondary-500 transition-colors duration-200 font-medium"
+        variant="primary"
+        size="lg"
+        :loading="isSubmitting"
         :disabled="isSubmitting"
+        class="w-full"
       >
         {{ isSubmitting ? 'Sending...' : 'Send Message' }}
-      </button>
+      </Button>
     </form>
 
     <div v-else-if="status === 'success'" class="text-center py-8">
@@ -89,6 +92,7 @@
 
 <script setup>
 import { ref, computed } from 'vue'
+import Button from '~/components/ui/Button.vue'
 
 const name = ref('')
 const phone = ref('')
