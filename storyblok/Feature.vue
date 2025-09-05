@@ -1,21 +1,17 @@
 <template>
-  <div v-editable="blok" class="w-full bg-[#f7f6fd] rounded-[5px] text-center flex flex-col min-h-[450px] h-full p-12">
-    <div class="flex-grow">
-      <h3 class="text-2xl text-[#1d243d] font-bold mb-4">{{ blok.name }}</h3>
-      <p class="mb-4">
-        {{ blok.description }}
-      </p>
-    </div>
-    <div class="mt-4">
-      <BaseButton 
-        variant="primary"
-        size="md"
-        class="w-full" 
-        @click="isOpen = !isOpen"
-      >
-        Learn More
-      </BaseButton>
-    </div>
+  <FeatureCard
+    v-editable="blok"
+    :title="blok.name"
+    :description="blok.description"
+    action-text="Learn More"
+    variant="filled"
+    size="lg"
+    padding="xl"
+    rounded="xl"
+    shadow="lg"
+    class="w-full min-h-[450px] h-full"
+    @action="isOpen = !isOpen"
+  />
 
     <!-- Modal -->
     <div v-if="isOpen" class="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
@@ -24,7 +20,14 @@
 
       <!-- Modal panel -->
       <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-        <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+        <BaseCard
+          variant="elevated"
+          size="lg"
+          padding="none"
+          rounded="lg"
+          shadow="2xl"
+          class="relative transform overflow-hidden text-left transition-all sm:my-8 sm:w-full sm:max-w-lg"
+        >
           <!-- Header -->
           <div class="bg-[#E8EFF5] px-4 py-3 sm:px-6 flex justify-between items-center">
             <h3 class="text-lg font-medium text-gray-900" id="modal-title">{{ blok.name }}</h3>
@@ -64,16 +67,17 @@
               Book Session
             </BaseButton>
           </div>
-        </div>
+        </BaseCard>
       </div>
     </div>
-  </div>
 </template>
 
 <script setup>
 import { ref, computed } from 'vue'
 import { useMarkdown } from '~/composables/useMarkdown'
 import BaseButton from '~/components/ui/BaseButton.vue'
+import BaseCard from '~/components/ui/BaseCard.vue'
+import FeatureCard from '~/components/ui/FeatureCard.vue'
 
 const props = defineProps({
   blok: {
