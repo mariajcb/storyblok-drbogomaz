@@ -93,10 +93,11 @@ module.exports = {
                 center: true,
                 padding: {
                     DEFAULT: '1rem',
-                    sm: '2rem',
-                    lg: '4rem',
-                    xl: '5rem',
-                    '2xl': '6rem',
+                    sm: '1.5rem',
+                    md: '2rem',
+                    lg: '3rem',
+                    xl: '4rem',
+                    '2xl': '5rem',
                 },
                 screens: {
                     sm: '640px',
@@ -105,6 +106,24 @@ module.exports = {
                     xl: '1280px',
                     '2xl': '1400px',
                 },
+            },
+            // Custom Grid System
+            gridTemplateColumns: {
+                'luxury-12': 'repeat(12, minmax(0, 1fr))',
+                'luxury-8': 'repeat(8, minmax(0, 1fr))',
+                'luxury-6': 'repeat(6, minmax(0, 1fr))',
+                'luxury-4': 'repeat(4, minmax(0, 1fr))',
+                'luxury-3': 'repeat(3, minmax(0, 1fr))',
+                'luxury-2': 'repeat(2, minmax(0, 1fr))',
+            },
+            gap: {
+                'luxury-xs': '0.75rem',   // 12px
+                'luxury-sm': '1rem',      // 16px
+                'luxury-md': '1.25rem',   // 20px
+                'luxury-lg': '1.5rem',    // 24px
+                'luxury-xl': '2rem',      // 32px
+                'luxury-2xl': '2.5rem',   // 40px
+                'luxury-3xl': '3rem',     // 48px
             },
             colors: {
                 // Primary Colors -  Blue Palette
@@ -241,6 +260,20 @@ module.exports = {
                 'spin': 'spin 1s linear infinite',
                 'pulse': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                 'bounce': 'bounce 1s infinite',
+            },
+            // Section Spacing Utilities
+            sectionSpacing: {
+                'hero': '144px',      // 36rem - Hero sections
+                'major': '96px',      // 24rem - Major sections
+                'content': '64px',    // 16rem - Content sections
+                'component': '32px',  // 8rem - Component spacing
+                'card': '24px',       // 6rem - Card spacing
+                'tight': '16px',      // 4rem - Tight spacing
+            },
+            // Additional responsive breakpoints (extends default)
+            screens: {
+                'xs': '475px',
+                '3xl': '1600px',
             },
         },
     },

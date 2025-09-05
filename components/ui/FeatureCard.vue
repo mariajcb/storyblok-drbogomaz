@@ -12,41 +12,45 @@
     v-bind="$attrs"
     @click="$emit('click', $event)"
   >
-    <!-- Icon or Image -->
-    <div v-if="icon || $slots.icon" class="feature-icon mb-4">
-      <slot name="icon">
-        <component v-if="icon" :is="icon" class="w-12 h-12 text-primary-500" />
-      </slot>
-    </div>
+    <template #default>
+      <!-- Icon or Image -->
+      <div v-if="icon || $slots.icon" class="feature-icon mb-4">
+        <slot name="icon">
+          <component v-if="icon" :is="icon" class="w-12 h-12 text-primary-500" />
+        </slot>
+      </div>
 
-    <!-- Title -->
-    <h3 v-if="title" class="feature-title mb-3">
-      {{ title }}
-    </h3>
+      <!-- Title -->
+      <h3 v-if="title" class="feature-title mb-3">
+        {{ title }}
+      </h3>
 
-    <!-- Description -->
-    <p v-if="description" class="feature-description mb-6 flex-grow">
-      {{ description }}
-    </p>
+      <!-- Description -->
+      <p v-if="description" class="feature-description mb-6 flex-grow">
+        {{ description }}
+      </p>
 
-    <!-- Content Slot -->
-    <div v-if="$slots.default" class="feature-content mb-6 flex-grow">
-      <slot />
-    </div>
+      <!-- Content Slot -->
+      <div v-if="$slots.content" class="feature-content mb-6 flex-grow">
+        <slot name="content" />
+      </div>
+    </template>
 
-    <!-- Action Button -->
-    <div v-if="actionText || $slots.action" class="feature-action mt-auto">
-      <slot name="action">
-        <BaseButton
-          :variant="actionVariant"
-          :size="actionSize"
-          :disabled="actionDisabled"
-          @click="handleAction"
-        >
-          {{ actionText }}
-        </BaseButton>
-      </slot>
-    </div>
+    <template #footer>
+      <!-- Action Button -->
+      <div v-if="actionText || $slots.action" class="feature-action">
+        <slot name="action">
+          <BaseButton
+            :variant="actionVariant"
+            :size="actionSize"
+            :disabled="actionDisabled"
+            @click="handleAction"
+          >
+            {{ actionText }}
+          </BaseButton>
+        </slot>
+      </div>
+    </template>
   </BaseCard>
 </template>
 

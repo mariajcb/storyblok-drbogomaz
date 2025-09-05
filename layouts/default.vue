@@ -1,8 +1,10 @@
 <template>
-  <div class="site">
+  <div class="site-layout">
     <main class="site-content" role="main">
       <TopHeader />
-      <slot />
+      <div class="main-content">
+        <slot />
+      </div>
     </main>
     <BottomFooter />
     <CookieBanner @consent-updated="handleConsentUpdate" />
@@ -37,13 +39,37 @@ export default {
 </script>
 
 <style>
-.site {
+.site-layout {
   display: flex;
-  min-height: 100vh;
   flex-direction: column;
+  min-height: 100vh;
+  background-color: #ffffff;
 }
 
 .site-content {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+  width: 100%;
+}
+
+/* Ensure proper spacing and layout */
+.site-layout * {
+  box-sizing: border-box;
+}
+
+/* Smooth scrolling for better UX */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Ensure consistent spacing */
+body {
+  margin: 0;
+  padding: 0;
 }
 </style>

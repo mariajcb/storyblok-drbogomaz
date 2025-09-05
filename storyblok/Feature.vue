@@ -9,7 +9,7 @@
     padding="xl"
     rounded="xl"
     shadow="lg"
-    class="w-full min-h-[450px] h-full"
+    class="w-full h-full"
     @action="isOpen = !isOpen"
   />
 

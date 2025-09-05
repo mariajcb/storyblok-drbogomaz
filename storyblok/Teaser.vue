@@ -1,23 +1,33 @@
 <template>
-  <div class="relative min-h-[calc(100vh-3.25rem)] overflow-hidden" v-editable="blok">
+  <div class="hero-section relative min-h-[calc(100vh-3.25rem)] overflow-hidden" v-editable="blok">
     <img 
-      class="absolute inset-0 w-full h-full object-cover object-top" 
+      class="hero-background absolute inset-0 w-full h-full object-cover object-top" 
       :src="blok.Image?.filename" 
       :alt="blok.Image?.alt || ''"
     >
-    <div class="relative z-10 container mx-auto px-4 py-12">
-      <h1 class="text-5xl font-bold mb-4 drop-shadow-lg">{{ blok.headline || 'Default Title' }}</h1>
-      <h2 class="text-2xl font-bold mb-4 drop-shadow-md"><strong>{{ blok.subtitle || 'Default Subtitle' }}</strong></h2>
-      <p class="text-2xl mb-8 drop-shadow-md">{{ blok.body }}</p>
-      <BaseButton
-        tag="NuxtLink"
-        to="/contact"
-        variant="tertiary"
-        size="lg"
-        class="bg-white text-primary-500 hover:bg-primary-500 hover:text-white"
-      >
-        Contact Me
-      </BaseButton>
+    <div class="hero-content relative z-10 container mx-auto px-4 py-24">
+      <div class="hero-text max-w-4xl">
+        <h1 class="hero-title text-6xl md:text-7xl lg:text-8xl font-bold mb-6 drop-shadow-lg">
+          {{ blok.headline || 'Default Title' }}
+        </h1>
+        <h2 class="hero-subtitle text-2xl md:text-3xl lg:text-4xl font-semibold mb-6 drop-shadow-md">
+          {{ blok.subtitle || 'Default Subtitle' }}
+        </h2>
+        <p class="hero-body text-xl md:text-2xl mb-12 drop-shadow-md max-w-3xl">
+          {{ blok.body }}
+        </p>
+        <div class="hero-actions">
+          <BaseButton
+            tag="NuxtLink"
+            to="/contact"
+            variant="tertiary"
+            size="xl"
+            class="hero-button bg-white text-primary-500 hover:bg-primary-500 hover:text-white transition-all duration-300 transform hover:scale-105"
+          >
+            Contact Me
+          </BaseButton>
+        </div>
+      </div>
     </div>
   </div>
 </template>

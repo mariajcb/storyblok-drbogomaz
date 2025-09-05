@@ -24,7 +24,7 @@
     </div>
 
     <!-- Card Footer -->
-    <div v-if="$slots.footer" class="card-footer">
+    <div v-if="$slots.footer">
       <slot name="footer" />
     </div>
   </component>
@@ -233,14 +233,6 @@ const cardClasses = computed(() => {
   
   &:last-child {
     @apply mb-0;
-  }
-}
-
-.card-footer {
-  @apply mt-6 pt-4 border-t border-neutral-200;
-  
-  &:first-child {
-    @apply mt-0 pt-0 border-t-0;
   }
 }
 
