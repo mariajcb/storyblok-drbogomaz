@@ -22,7 +22,7 @@
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^6.11.4",
     "@storyblok/nuxt": "^6.2.4",
-    "nuxt": "^3.16.2",
+    "nuxt": "^3.19.0",
     "sass-embedded": "^1.86.3"
   },
   "dependencies": {
