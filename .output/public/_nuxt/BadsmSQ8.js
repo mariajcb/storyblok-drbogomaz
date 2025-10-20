@@ -1,1 +1,0 @@
-import{g as a,T as c,o as e,c as n,Q as l,R as i,M as _,N as b}from"#entry";const k={class:"px-4"},u={__name:"Page",props:{blok:Object},setup(o){return(m,d)=>{const r=b("StoryblokComponent"),s=c("editable");return a((e(),n("div",k,[(e(!0),n(l,null,i(o.blok.body,t=>(e(),_(r,{key:t._uid,blok:t},null,8,["blok"]))),128))])),[[s,o.blok]])}}};export{u as default};
