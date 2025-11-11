@@ -23,7 +23,7 @@ describe('Navigation Routing Integration', () => {
   })
 
   describe('Desktop Navigation Links', () => {
-    it('renders all navigation links with correct routes and labels', () => {
+    it('renders navigation links pointing to /, /blog, and /contact routes with Home, Blog, and Contact labels', () => {
       const wrapper = mount(DesktopNavigation, {
         global: {
           stubs: {
@@ -105,7 +105,7 @@ describe('Navigation Routing Integration', () => {
   })
 
   describe('Mobile Navigation Links', () => {
-    it('renders all navigation links with correct routes and labels', () => {
+    it('renders navigation links pointing to /, /blog, and /contact routes with Home, Blog, and Contact labels', () => {
       const wrapper = mount(MobileNavigationMenu, {
         props: {
           isOpen: true

@@ -380,7 +380,7 @@ describe('CookieBanner Component Integration', () => {
   })
 
   describe('Privacy Policy Link', () => {
-    it('renders privacy policy link with correct route', () => {
+    it('renders privacy policy link pointing to /privacy route', () => {
       mockHasResponded.mockReturnValue(false)
       mockIsLoaded.value = true
 

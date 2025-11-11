@@ -44,7 +44,7 @@ describe('BottomFooter Component Integration', () => {
   })
 
   describe('Footer Links', () => {
-    it('renders navigation links with correct routes', () => {
+    it('renders navigation links pointing to /privacy, /contact, and /blog routes', () => {
       const wrapper = mount(BottomFooter, {
         global: {
           stubs: {

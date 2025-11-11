@@ -102,7 +102,7 @@ describe('TopHeader Navigation Integration', () => {
   })
 
   describe('Navigation Links', () => {
-    it('renders all desktop navigation links with correct routes and labels', () => {
+    it('renders desktop navigation links pointing to /, /blog, and /contact routes with Home, Blog, and Contact labels', () => {
       const desktopNav = wrapper.findComponent({ name: 'DesktopNavigation' })
       const links = desktopNav.findAll('a')
       
@@ -115,7 +115,7 @@ describe('TopHeader Navigation Integration', () => {
       expect(links[2].text()).toBe('Contact')
     })
 
-    it('renders all mobile navigation links with correct routes and labels', () => {
+    it('renders mobile navigation links pointing to /, /blog, and /contact routes with Home, Blog, and Contact labels', () => {
       const mobileMenu = wrapper.findComponent({ name: 'MobileNavigationMenu' })
       const links = mobileMenu.findAll('a')
       

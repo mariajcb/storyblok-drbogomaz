@@ -74,7 +74,7 @@ describe('Navigation Component Integration', () => {
   })
 
   describe('Navigation Links', () => {
-    it('renders all navigation links with correct routes', () => {
+    it('renders navigation links pointing to /, /blog, and /contact routes', () => {
       const links = menuWrapper.findAll('a')
       
       expect(links[0].attributes('href')).toBe('/')
