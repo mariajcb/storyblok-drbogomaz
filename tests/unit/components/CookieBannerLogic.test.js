@@ -1,7 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { computed, ref } from 'vue'
 
-// Extract showBanner logic for testing
 const createShowBannerLogic = () => {
   const isLoaded = ref(false)
   const hasResponded = ref(false)

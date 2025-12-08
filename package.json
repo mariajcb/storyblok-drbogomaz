@@ -27,12 +27,14 @@
   "devDependencies": {
     "@nuxt/test-utils": "^3.19.2",
     "@nuxtjs/tailwindcss": "^6.11.4",
+    "@playwright/test": "^1.56.1",
     "@storyblok/nuxt": "^6.2.4",
     "@testing-library/vue": "^8.1.0",
     "@vitest/coverage-v8": "^3.2.4",
     "@vue/test-utils": "^2.4.6",
     "jsdom": "^26.1.0",
     "nuxt": "^3.19.0",
+    "playwright": "^1.56.1",
     "sass-embedded": "^1.86.3",
     "vitest": "^3.2.4"
   },

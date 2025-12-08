@@ -1,7 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { computed, ref } from 'vue'
 
-// Extract validation logic for testing
 const createValidationLogic = () => {
   const name = ref('')
   const phone = ref('')
