@@ -385,13 +385,20 @@ watch(consentError, (newError) => {
       background-color: #718FCB;
       color: white;
       
-      &:hover:not(:disabled) {
+      &:hover {
         background-color: white;
         color: #718FCB;
       }
       
-      &:active:not(:disabled) {
+      &:active {
         transform: translateY(0);
+      }
+      
+      &:disabled {
+        &:hover {
+          background-color: #718FCB;
+          color: white;
+        }
       }
     }
     
@@ -400,14 +407,22 @@ watch(consentError, (newError) => {
       color: #6b7280;
       border: 1px solid #d1d5db;
       
-      &:hover:not(:disabled) {
+      &:hover {
         background-color: #f9fafb;
         border-color: #9ca3af;
         color: #374151;
       }
       
-      &:active:not(:disabled) {
+      &:active {
         background-color: #f3f4f6;
+      }
+      
+      &:disabled {
+        &:hover {
+          background-color: transparent;
+          border-color: #d1d5db;
+          color: #6b7280;
+        }
       }
     }
   }
@@ -436,7 +451,7 @@ watch(consentError, (newError) => {
     padding: 0;
     margin: -1px;
     overflow: hidden;
-    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
     white-space: nowrap;
     border: 0;
   }
@@ -466,7 +481,7 @@ watch(consentError, (newError) => {
   padding: 0;
   margin: -1px;
   overflow: hidden;
-  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
   white-space: nowrap;
   border: 0;
 }
