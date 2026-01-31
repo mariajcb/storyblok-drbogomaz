@@ -95,3 +95,4 @@ sw.*
 .cursor
 .output
 test-results/
+.github
