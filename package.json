@@ -19,12 +19,15 @@
     "test:run": "vitest run",
     "test:coverage": "vitest run --coverage",
     "test:ui": "vitest --ui",
-    "test:watch": "vitest --watch"
+    "test:watch": "vitest --watch",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui"
   },
   "stackblitz": {
     "startCommand": "npm run stackblitz"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.11.0",
     "@nuxt/test-utils": "^3.19.2",
     "@nuxtjs/tailwindcss": "^6.11.4",
     "@playwright/test": "^1.56.1",
