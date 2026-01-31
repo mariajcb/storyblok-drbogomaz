@@ -40,8 +40,18 @@ npm run test:watch    # Start Vitest in watch mode (explicit)
 
 ### CI/CD Mode
 ```bash
-npm run test:run      # Run tests once and exit
-npm run test:coverage # Run tests with coverage report
+npm run test:run           # Run all Vitest tests once
+npm run test:run:unit     # Run only unit tests (faster feedback)
+npm run test:run:integration  # Run only integration tests
+npm run test:coverage      # Run tests with coverage report
+```
+
+### E2E (Playwright)
+```bash
+npm run test:e2e          # Run E2E tests in all browsers (Chromium, Firefox, WebKit, Mobile)
+npm run test:e2e:chromium # Run E2E in Chromium only (faster for local feedback)
+npm run test:e2e:smoke    # Run only cross-browser smoke tests in Chromium
+npm run test:e2e:ui       # Playwright UI mode
 ```
 
 ### UI Mode
@@ -51,11 +61,20 @@ npm run test:ui       # Start Vitest UI (if @vitest/ui is installed)
 
 ## Test Commands
 
+### Vitest (unit + integration)
 - `npm run test` - Start Vitest in watch mode
-- `npm run test:run` - Run tests once
+- `npm run test:run` - Run all tests once
+- `npm run test:run:unit` - Run only unit tests
+- `npm run test:run:integration` - Run only integration tests
 - `npm run test:coverage` - Run tests with coverage
 - `npm run test:ui` - Start Vitest UI
 - `npm run test:watch` - Start Vitest in watch mode
+
+### Playwright (E2E)
+- `npm run test:e2e` - Run E2E in all configured browsers
+- `npm run test:e2e:chromium` - Run E2E in Chromium only (quicker)
+- `npm run test:e2e:smoke` - Run smoke tests in Chromium only
+- `npm run test:e2e:ui` - Playwright UI
 
 ## Writing Tests
 
@@ -118,6 +137,18 @@ const mockData = createMockStoryblokData('page', {
 3. **Use Descriptive Names**: Test names should explain the expected behavior
 4. **Test User Interactions**: Focus on how users interact with components
 5. **Avoid Over-Testing**: Don't test trivial code that ESLint/TypeScript can catch
+
+## Parallelization and Speed
+
+- **Vitest**: Tests run in parallel by default (thread pool). Use `test:run:unit` or `test:run:integration` for faster feedback when working on one layer.
+- **Playwright**: E2E tests run in parallel across workers and browser projects. Use `test:e2e:chromium` or `test:e2e:smoke` for quicker local runs; full `test:e2e` runs all browsers.
+
+## Reducing E2E Flakiness
+
+1. **Rely on auto-waiting**: Use Playwright assertions (`expect(locator).toBeVisible()`) instead of fixed `page.waitForTimeout()` so tests proceed as soon as conditions are met.
+2. **Stable selectors**: Prefer role, label, or test IDs over fragile CSS (e.g. `.cookie-banner` is acceptable for known structure; avoid deep or dynamic class chains).
+3. **Retries in CI**: Playwright is configured with `retries: 2` in CI to absorb occasional network or timing variance.
+4. **Isolate state**: Clear storage or navigate to a known state in `beforeEach` when tests depend on it (e.g. cookie consent).
 
 ## Common Patterns
 

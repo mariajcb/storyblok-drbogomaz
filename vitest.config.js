@@ -8,6 +8,9 @@ export default defineConfig({
     environment: 'jsdom',
     globals: true,
     setupFiles: ['./tests/setup.js'],
+    testTimeout: 10000,
+    pool: 'threads',
+    fileParallelism: true,
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
@@ -33,7 +36,8 @@ export default defineConfig({
   resolve: {
     alias: {
       '~': fileURLToPath(new URL('./', import.meta.url)),
-      '@': fileURLToPath(new URL('./', import.meta.url))
+      '@': fileURLToPath(new URL('./', import.meta.url)),
+      '#app': fileURLToPath(new URL('./tests/mocks/app.js', import.meta.url))
     }
   }
 })

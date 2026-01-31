@@ -17,10 +17,14 @@
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "test": "vitest",
     "test:run": "vitest run",
+    "test:run:unit": "vitest run tests/unit",
+    "test:run:integration": "vitest run tests/integration",
     "test:coverage": "vitest run --coverage",
     "test:ui": "vitest --ui",
     "test:watch": "vitest --watch",
     "test:e2e": "playwright test",
+    "test:e2e:chromium": "playwright test --project=chromium",
+    "test:e2e:smoke": "playwright test CrossBrowserSmoke --project=chromium",
     "test:e2e:ui": "playwright test --ui"
   },
   "stackblitz": {

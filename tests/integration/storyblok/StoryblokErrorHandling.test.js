@@ -7,9 +7,10 @@ import Blog from '../../../storyblok/Blog.vue'
 import Grid from '../../../storyblok/Grid.vue'
 import Feature from '../../../storyblok/Feature.vue'
 
+const mockGtag = vi.fn()
+
 describe('Storyblok Error Handling & Edge Cases Integration', () => {
   let mockRouter
-  let mockGtag
 
   beforeEach(() => {
     mockRouter = {
@@ -26,7 +27,6 @@ describe('Storyblok Error Handling & Edge Cases Integration', () => {
       }
     }
 
-    mockGtag = vi.fn()
     global.window = {
       ...global.window,
       gtag: mockGtag,

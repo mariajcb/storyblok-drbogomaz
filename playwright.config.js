@@ -3,17 +3,17 @@ import { defineConfig, devices } from '@playwright/test'
 /**
  * Playwright configuration for Nuxt 3 application
  * @see https://playwright.dev/docs/test-configuration
+ *
+ * Parallelization: fullyParallel runs test files in parallel; workers use all
+ * available cores locally. CI uses 1 worker to avoid overloading the single dev server.
  */
 export default defineConfig({
   testDir: './tests/e2e',
-  
-  // Maximum time one test can run for
+
   timeout: 30 * 1000,
-  
-  // Test execution settings
   fullyParallel: true,
   forbidOnly: !!process.env.CI, // no test skips in production
-  retries: process.env.CI ? 2 : 0, // no retries locally because it's slow
+  retries: process.env.CI ? 2 : 0, // retries in CI reduce flakiness from network/timing
   workers: process.env.CI ? 1 : undefined,
   
   reporter: [
@@ -21,23 +21,12 @@ export default defineConfig({
     ['list'], // console output
     process.env.CI ? ['github'] : ['list']
   ],
-  
-  // Shared settings for all projects
   use: {
-    // Base URL for tests
     baseURL: process.env.PLAYWRIGHT_TEST_BASE_URL || 'http://localhost:3000',
-    
-    // Collect trace when retrying the failed test
     trace: 'on-first-retry',
-    
-    // Screenshot on failure
     screenshot: 'only-on-failure',
-    
-    // Video on failure
     video: 'retain-on-failure',
   },
-
-  // Configure projects for major browsers
   projects: [
     {
       name: 'chromium',
@@ -54,7 +43,6 @@ export default defineConfig({
       use: { ...devices['Desktop Safari'] },
     },
 
-    // Mobile viewports
     {
       name: 'Mobile Chrome',
       use: { ...devices['Pixel 5'] },
@@ -64,8 +52,6 @@ export default defineConfig({
       use: { ...devices['iPhone 12'] },
     },
   ],
-
-  // Run your local dev server before starting the tests
   webServer: {
     command: 'npm run dev',
     url: 'http://localhost:3000',

@@ -8,6 +8,7 @@
 
 <script setup>
 import { computed, onMounted } from 'vue'
+import { useNuxtApp } from '#app'
 import { useMarkdown } from '~/composables/useMarkdown'
 
 const props = defineProps({
