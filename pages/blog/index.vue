@@ -62,7 +62,7 @@ const trackBlogPostClick = (blogPost) => {
 
 // Track blog index page view
 onMounted(() => {
-  if ($gtag) {
+  if ($gtag && blogPosts.value.length > 0) {
     $gtag('event', 'blog_index_view', {
       total_posts: blogPosts.value.length,
       content_type: 'therapy_blog_listing',
@@ -71,26 +71,14 @@ onMounted(() => {
   }
 })
 
-// Load blog posts
-const config = useRuntimeConfig()
-const version = 'published' // Always use published version
-
+// Load blog posts using Storyblok API
 try {
-  // Use the Storyblok API directly
-  const response = await fetch(
-    `https://api.storyblok.com/v2/cdn/stories?version=${version}&starts_with=blog/&sort_by=published_at:desc&token=${config.public.storyblokApiToken}`,
-    {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }
-  )
-  
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`)
-  }
-  
-  const data = await response.json()
+  const api = useStoryblokApi()
+  const { data } = await api.get('cdn/stories', {
+    version: 'published',
+    starts_with: 'blog/',
+    sort_by: 'published_at:desc'
+  })
   
   if (data.stories && data.stories.length > 0) {
     blogPosts.value = data.stories

@@ -24,24 +24,12 @@ const { $gtag } = useNuxtApp()
 
 // Load the JSON from the API
 const { slug } = useRoute().params
-const version = 'published' // Always use published version
 
 try {
-  const config = useRuntimeConfig()
-  const response = await fetch(
-    `https://api.storyblok.com/v2/cdn/stories/blog/${slug}?version=${version}&token=${config.public.storyblokApiToken}`,
-    {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }
-  )
-  
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`)
-  }
-  
-  const data = await response.json()
+  const api = useStoryblokApi()
+  const { data } = await api.get(`cdn/stories/blog/${slug}`, {
+    version: 'published'
+  })
   
   if (data.story) {
     story.value = data.story
