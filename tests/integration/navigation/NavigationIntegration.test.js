@@ -19,7 +19,6 @@ describe('Navigation Component Integration', () => {
       },
       global: {
         stubs: {
-          'NuxtLink': {
             template: '<a :href="to"><slot /></a>',
             props: ['to']
           }

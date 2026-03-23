@@ -51,7 +51,6 @@ describe('Storyblok Content Fallback Integration', () => {
         props: { blok: mockBlok },
         global: {
           stubs: {
-            'NuxtLink': 'a'
           },
           mocks: {
             $router: mockRouter,
@@ -73,7 +72,6 @@ describe('Storyblok Content Fallback Integration', () => {
         props: { blok: mockBlok },
         global: {
           stubs: {
-            'NuxtLink': 'a'
           },
           mocks: {
             $router: mockRouter,
@@ -97,7 +95,6 @@ describe('Storyblok Content Fallback Integration', () => {
         props: { blok: mockBlok },
         global: {
           stubs: {
-            'NuxtLink': 'a'
           },
           mocks: {
             $router: mockRouter,
@@ -123,7 +120,6 @@ describe('Storyblok Content Fallback Integration', () => {
         props: { blok: mockBlok },
         global: {
           stubs: {
-            'NuxtLink': 'a'
           },
           mocks: {
             $router: mockRouter,
@@ -146,7 +142,6 @@ describe('Storyblok Content Fallback Integration', () => {
         props: { blok: mockBlok },
         global: {
           stubs: {
-            'NuxtLink': 'a'
           },
           mocks: {
             $router: mockRouter,

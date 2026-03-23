@@ -41,7 +41,6 @@ describe('Layout Component Integration', () => {
       const topHeader = mount(TopHeader, {
         global: {
           stubs: {
-            'NuxtLink': 'a'
           },
           mocks: {
             $router: mockRouter,
@@ -53,7 +52,6 @@ describe('Layout Component Integration', () => {
       const bottomFooter = mount(BottomFooter, {
         global: {
           stubs: {
-            'NuxtLink': {
               template: '<a :href="to"><slot /></a>',
               props: ['to']
             },

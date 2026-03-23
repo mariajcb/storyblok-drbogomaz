@@ -77,13 +77,9 @@ global.process = {
   server: false
 }
 
-// Mock Event constructor
-global.Event = class Event {
-  constructor(type, options = {}) {
-    this.type = type
-    this.bubbles = options.bubbles || false
-    this.cancelable = options.cancelable || false
-  }
+// Mock Vue directives
+config.global.directives = {
+  editable: vi.fn()
 }
 
 // Mock composables globally

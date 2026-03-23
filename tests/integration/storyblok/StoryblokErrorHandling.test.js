@@ -133,7 +133,6 @@ describe('Storyblok Error Handling & Edge Cases Integration', () => {
         props: { blok: {} },
         global: {
           stubs: {
-            'NuxtLink': 'a'
           },
           mocks: {
             $router: mockRouter,
@@ -155,7 +154,6 @@ describe('Storyblok Error Handling & Edge Cases Integration', () => {
         props: { blok: mockBlok },
         global: {
           stubs: {
-            'NuxtLink': 'a'
           },
           mocks: {
             $router: mockRouter,
@@ -181,7 +179,6 @@ describe('Storyblok Error Handling & Edge Cases Integration', () => {
         props: { blok: mockBlok },
         global: {
           stubs: {
-            'NuxtLink': 'a'
           },
           mocks: {
             $router: mockRouter,
@@ -217,7 +214,6 @@ describe('Storyblok Error Handling & Edge Cases Integration', () => {
         props: { blok: mockBlok },
         global: {
           stubs: {
-            'NuxtLink': {
               template: '<a :href="to"><slot /></a>',
               props: ['to']
             }
@@ -255,7 +251,6 @@ describe('Storyblok Error Handling & Edge Cases Integration', () => {
         props: { blok: mockBlok },
         global: {
           stubs: {
-            'NuxtLink': {
               template: '<a :href="to"><slot /></a>',
               props: ['to']
             }
@@ -289,7 +284,6 @@ describe('Storyblok Error Handling & Edge Cases Integration', () => {
         props: { blok: mockBlok },
         global: {
           stubs: {
-            'NuxtLink': {
               template: '<a :href="to"><slot /></a>',
               props: ['to']
             }
@@ -445,7 +439,6 @@ describe('Storyblok Error Handling & Edge Cases Integration', () => {
         props: { blok: {} },
         global: {
           stubs: {
-            'NuxtLink': 'a'
           },
           mocks: {
             $router: mockRouter,
@@ -468,7 +461,6 @@ describe('Storyblok Error Handling & Edge Cases Integration', () => {
         props: { blok: mockBlok },
         global: {
           stubs: {
-            'NuxtLink': {
               template: '<a :href="to"><slot /></a>',
               props: ['to']
             }
@@ -499,7 +491,6 @@ describe('Storyblok Error Handling & Edge Cases Integration', () => {
         props: { blok: mockBlok },
         global: {
           stubs: {
-            'NuxtLink': {
               template: '<a :href="to"><slot /></a>',
               props: ['to']
             }

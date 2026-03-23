@@ -56,11 +56,9 @@ describe('Storyblok Dynamic Composition Integration', () => {
           blok: mockBlok
         },
         global: {
-          stubs: {
-            'StoryblokComponent': {
-              template: '<div :data-component="blok.component">{{ blok.headline || blok.title || blok.name }}</div>',
-              props: ['blok']
-            }
+          mocks: {
+            $router: mockRouter,
+            $route: mockRouter.currentRoute.value
           }
         }
       })
@@ -82,11 +80,9 @@ describe('Storyblok Dynamic Composition Integration', () => {
           blok: mockBlok
         },
         global: {
-          stubs: {
-            'StoryblokComponent': {
-              template: '<div></div>',
-              props: ['blok']
-            }
+          mocks: {
+            $router: mockRouter,
+            $route: mockRouter.currentRoute.value
           }
         }
       })
@@ -111,11 +107,9 @@ describe('Storyblok Dynamic Composition Integration', () => {
           blok: mockBlok
         },
         global: {
-          stubs: {
-            'StoryblokComponent': {
-              template: '<div :data-component="blok.component">{{ blok.name }}</div>',
-              props: ['blok']
-            }
+          mocks: {
+            $router: mockRouter,
+            $route: mockRouter.currentRoute.value
           }
         }
       })
@@ -139,12 +133,6 @@ describe('Storyblok Dynamic Composition Integration', () => {
       const wrapper = mount(Feature, {
         props: { blok: mockBlok },
         global: {
-          stubs: {
-            'NuxtLink': {
-              template: '<a :href="to"><slot /></a>',
-              props: ['to']
-            }
-          },
           mocks: {
             $router: mockRouter,
             $route: mockRouter.currentRoute.value
@@ -173,9 +161,6 @@ describe('Storyblok Dynamic Composition Integration', () => {
       const wrapper = mount(Feature, {
         props: { blok: mockBlok },
         global: {
-          stubs: {
-            'NuxtLink': 'a'
-          },
           mocks: {
             $router: mockRouter,
             $route: mockRouter.currentRoute.value
@@ -206,9 +191,6 @@ describe('Storyblok Dynamic Composition Integration', () => {
       const wrapper = mount(Feature, {
         props: { blok: mockBlok },
         global: {
-          stubs: {
-            'NuxtLink': 'a'
-          },
           mocks: {
             $router: mockRouter,
             $route: mockRouter.currentRoute.value
@@ -234,12 +216,6 @@ describe('Storyblok Dynamic Composition Integration', () => {
       const wrapper = mount(Feature, {
         props: { blok: mockBlok },
         global: {
-          stubs: {
-            'NuxtLink': {
-              template: '<a :href="to"><slot /></a>',
-              props: ['to']
-            }
-          },
           mocks: {
             $router: mockRouter,
             $route: mockRouter.currentRoute.value

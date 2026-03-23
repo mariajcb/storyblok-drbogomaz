@@ -48,7 +48,6 @@ describe('BottomFooter Component Integration', () => {
       const wrapper = mount(BottomFooter, {
         global: {
           stubs: {
-            'NuxtLink': 'a',
             'ClientOnly': 'div'
           },
           mocks: {
@@ -72,7 +71,6 @@ describe('BottomFooter Component Integration', () => {
       const wrapper = mount(BottomFooter, {
         global: {
           stubs: {
-            'NuxtLink': 'a',
             'ClientOnly': 'div'
           },
           mocks: {

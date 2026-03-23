@@ -88,7 +88,6 @@ describe('Storyblok Component Rendering Integration', () => {
         props: { blok: mockBlok },
         global: {
           stubs: {
-            'NuxtLink': {
               template: '<a :href="to"><slot /></a>',
               props: ['to']
             }
@@ -115,7 +114,6 @@ describe('Storyblok Component Rendering Integration', () => {
         props: { blok: mockBlok },
         global: {
           stubs: {
-            'NuxtLink': {
               template: '<a :href="to"><slot /></a>',
               props: ['to']
             }
@@ -143,7 +141,6 @@ describe('Storyblok Component Rendering Integration', () => {
         props: { blok: mockBlok },
         global: {
           stubs: {
-            'NuxtLink': 'a'
           },
           mocks: {
             $router: mockRouter,
@@ -171,7 +168,6 @@ describe('Storyblok Component Rendering Integration', () => {
         props: { blok: mockBlok },
         global: {
           stubs: {
-            'NuxtLink': {
               template: '<a :href="to"><slot /></a>',
               props: ['to']
             }
@@ -198,7 +194,6 @@ describe('Storyblok Component Rendering Integration', () => {
         props: { blok: mockBlok },
         global: {
           stubs: {
-            'NuxtLink': {
               template: '<a :href="to"><slot /></a>',
               props: ['to']
             }

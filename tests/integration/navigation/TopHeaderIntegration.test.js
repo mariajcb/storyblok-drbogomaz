@@ -24,7 +24,6 @@ describe('TopHeader Navigation Integration', () => {
     wrapper = mount(TopHeader, {
       global: {
         stubs: {
-          'NuxtLink': {
             template: '<a :href="to" @click.prevent="$emit(\'click\', $event)"><slot /></a>',
             props: ['to'],
             emits: ['click']

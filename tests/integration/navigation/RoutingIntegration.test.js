@@ -27,7 +27,6 @@ describe('Navigation Routing Integration', () => {
       const wrapper = mount(DesktopNavigation, {
         global: {
           stubs: {
-            'NuxtLink': {
               template: '<a :href="to" @click.prevent="$emit(\'click\', $event)"><slot /></a>',
               props: ['to'],
               emits: ['click']
@@ -55,7 +54,6 @@ describe('Navigation Routing Integration', () => {
       const wrapper = mount(DesktopNavigation, {
         global: {
           stubs: {
-            'NuxtLink': {
               template: '<a :href="to" :class="{ \'nuxt-link-exact-active\': isActive }"><slot /></a>',
               props: ['to'],
               computed: {
@@ -80,7 +78,6 @@ describe('Navigation Routing Integration', () => {
       const wrapper = mount(DesktopNavigation, {
         global: {
           stubs: {
-            'NuxtLink': {
               template: '<a :href="to" @click.prevent="handleClick"><slot /></a>',
               props: ['to'],
               methods: {
@@ -112,7 +109,6 @@ describe('Navigation Routing Integration', () => {
         },
         global: {
           stubs: {
-            'NuxtLink': {
               template: '<a :href="to" @click.prevent="$emit(\'click\', $event)"><slot /></a>',
               props: ['to'],
               emits: ['click']
@@ -145,7 +141,6 @@ describe('Navigation Routing Integration', () => {
         },
         global: {
           stubs: {
-            'NuxtLink': {
               template: '<a :href="to" @click.prevent="handleClick"><slot /></a>',
               props: ['to'],
               methods: {
@@ -179,7 +174,6 @@ describe('Navigation Routing Integration', () => {
       const desktopWrapper = mount(DesktopNavigation, {
         global: {
           stubs: {
-            'NuxtLink': {
               template: '<a :href="to"><slot /></a>',
               props: ['to']
             }
@@ -197,7 +191,6 @@ describe('Navigation Routing Integration', () => {
         },
         global: {
           stubs: {
-            'NuxtLink': {
               template: '<a :href="to"><slot /></a>',
               props: ['to']
             }

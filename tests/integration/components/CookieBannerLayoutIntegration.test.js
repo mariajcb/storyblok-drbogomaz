@@ -52,7 +52,6 @@ describe('CookieBanner Layout Integration', () => {
       const wrapper = mount(CookieBanner, {
         global: {
           stubs: {
-            'NuxtLink': 'a',
             'ClientOnly': {
               template: '<div><slot /></div>'
             }
@@ -85,7 +84,6 @@ describe('CookieBanner Layout Integration', () => {
       const wrapper = mount(CookieBanner, {
         global: {
           stubs: {
-            'NuxtLink': 'a',
             'ClientOnly': {
               template: '<div><slot /></div>'
             }
@@ -118,7 +116,6 @@ describe('CookieBanner Layout Integration', () => {
       const wrapper = mount(CookieBanner, {
         global: {
           stubs: {
-            'NuxtLink': 'a',
             'ClientOnly': {
               template: '<div><slot /></div>'
             }
@@ -153,7 +150,6 @@ describe('CookieBanner Layout Integration', () => {
       const wrapper = mount(CookieBanner, {
         global: {
           stubs: {
-            'NuxtLink': 'a',
             'ClientOnly': {
               template: '<div><slot /></div>'
             }
@@ -188,7 +184,6 @@ describe('CookieBanner Layout Integration', () => {
       const wrapper = mount(CookieBanner, {
         global: {
           stubs: {
-            'NuxtLink': 'a',
             'ClientOnly': {
               template: '<div><slot /></div>'
             }
