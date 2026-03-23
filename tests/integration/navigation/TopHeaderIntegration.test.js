@@ -145,14 +145,21 @@ describe('TopHeader Navigation Integration', () => {
     it('transforms hamburger icon visual state when menu opens', async () => {
       const hamburgerButton = wrapper.findComponent({ name: 'NavigationHamburgerButton' })
       const button = hamburgerButton.find('button')
-      
+
       await button.trigger('click')
       await wrapper.vm.$nextTick()
-      
+      await new Promise(resolve => setTimeout(resolve, 50)) // Wait for transitions
+
+      // Check that the isOpen prop is updated
+      expect(hamburgerButton.props('isOpen')).toBe(true)
+
       const spans = hamburgerButton.findAll('span')
-      expect(spans[0].classes()).toContain('rotate-45')
-      expect(spans[1].classes()).toContain('opacity-0')
-      expect(spans[2].classes()).toContain('-rotate-45')
+      expect(spans.length).toBe(4) // 3 spans + 1 sr-only span
+
+      // Check the actual span elements (skip the sr-only span at index 0)
+      expect(spans[1].classes()).toContain('rotate-45')
+      expect(spans[2].classes()).toContain('opacity-0')
+      expect(spans[3].classes()).toContain('-rotate-45')
     })
   })
 

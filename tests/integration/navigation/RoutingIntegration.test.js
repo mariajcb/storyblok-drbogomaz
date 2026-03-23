@@ -179,7 +179,10 @@ describe('Navigation Routing Integration', () => {
       const desktopWrapper = mount(DesktopNavigation, {
         global: {
           stubs: {
-            'NuxtLink': 'a'
+            'NuxtLink': {
+              template: '<a :href="to"><slot /></a>',
+              props: ['to']
+            }
           },
           mocks: {
             $router: mockRouter,
@@ -194,7 +197,10 @@ describe('Navigation Routing Integration', () => {
         },
         global: {
           stubs: {
-            'NuxtLink': 'a'
+            'NuxtLink': {
+              template: '<a :href="to"><slot /></a>',
+              props: ['to']
+            }
           },
           mocks: {
             $router: mockRouter,
@@ -205,12 +211,12 @@ describe('Navigation Routing Integration', () => {
 
       const desktopLinks = desktopWrapper.findAll('a')
       const mobileLinks = mobileWrapper.findAll('a')
-      
+
       expect(desktopLinks.length).toBe(mobileLinks.length)
-      
+
       const desktopRoutes = desktopLinks.map(link => link.attributes('href'))
       const mobileRoutes = mobileLinks.map(link => link.attributes('href'))
-      
+
       expect(desktopRoutes).toEqual(mobileRoutes)
       expect(desktopRoutes).toEqual(['/', '/blog', '/contact'])
     })

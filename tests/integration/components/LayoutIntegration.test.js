@@ -53,7 +53,10 @@ describe('Layout Component Integration', () => {
       const bottomFooter = mount(BottomFooter, {
         global: {
           stubs: {
-            'NuxtLink': 'a',
+            'NuxtLink': {
+              template: '<a :href="to"><slot /></a>',
+              props: ['to']
+            },
             'ClientOnly': 'div'
           },
           mocks: {

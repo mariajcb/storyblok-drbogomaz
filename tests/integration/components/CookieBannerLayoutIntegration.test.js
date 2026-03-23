@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest'
 import { mount } from '@vue/test-utils'
+import { ref } from 'vue'
 import CookieBanner from '../../../components/CookieBanner.vue'
 
 describe('CookieBanner Layout Integration', () => {
@@ -31,37 +32,12 @@ describe('CookieBanner Layout Integration', () => {
     mockAcceptAll = vi.fn().mockResolvedValue(undefined)
     mockRejectAll = vi.fn().mockResolvedValue(undefined)
     mockHasResponded = vi.fn().mockReturnValue(false)
-    mockIsLoaded = { value: true }
-    mockConsentError = { value: null }
+    mockIsLoaded = ref(true)
+    mockConsentError = ref(null)
     handleConsentUpdate = vi.fn()
 
-    global.window = {
-      ...global.window,
-      gtag: mockGtag,
-      location: { pathname: '/', reload: vi.fn() }
-    }
-    global.process = { client: true }
-    global.document = {
-      addEventListener: vi.fn(),
-      removeEventListener: vi.fn(),
-      activeElement: { focus: vi.fn() }
-    }
-
-    vi.mock('~/composables/useCookieConsent', () => ({
-      useCookieConsent: () => ({
-        hasResponded: mockHasResponded,
-        acceptAll: mockAcceptAll,
-        rejectAll: mockRejectAll,
-        error: mockConsentError,
-        isLoaded: mockIsLoaded
-      })
-    }))
-
-    vi.mock('~/composables/useNuxtApp', () => ({
-      useNuxtApp: () => ({
-        $gtag: mockGtag
-      })
-    }))
+    // Don't override global objects - let jsdom handle DOM
+    // Composables are mocked globally in setup.js
   })
 
   afterEach(() => {
