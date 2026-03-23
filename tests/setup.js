@@ -1,10 +1,11 @@
 import { config } from '@vue/test-utils'
 import { vi } from 'vitest'
+import { ref } from 'vue'
 
 // Global test configuration
 config.global.stubs = {
   // Stub Nuxt-specific components and directives
-  'NuxtLink': 'a',
+  'NuxtLink': true, // Use true to stub with a comment
   'NuxtPage': 'div',
   'NuxtLayout': 'div',
   'ClientOnly': 'div',
@@ -76,21 +77,24 @@ global.process = {
   server: false
 }
 
-// Mock Vue directives
-global.vEditable = vi.fn()
+// Mock Event constructor
+global.Event = class Event {
+  constructor(type, options = {}) {
+    this.type = type
+    this.bubbles = options.bubbles || false
+    this.cancelable = options.cancelable || false
+  }
+}
 
 // Mock composables globally
 global.useCookieConsent = vi.fn(() => ({
-  hasResponded: false,
-  consent: {
-    analytics: false,
-    marketing: false
-  },
+  hasResponded: vi.fn(() => false), // Function that returns boolean
+  consent: ref(null), // Actual Vue ref
   acceptAll: vi.fn().mockResolvedValue(undefined),
   rejectAll: vi.fn().mockResolvedValue(undefined),
   updateConsent: vi.fn(),
-  error: null,
-  isLoaded: true
+  error: ref(null), // Actual Vue ref
+  isLoaded: ref(true) // Actual Vue ref
 }))
 
 global.useStoryblokApi = vi.fn(() => ({

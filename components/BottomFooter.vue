@@ -3,7 +3,7 @@
     <div class="container mx-auto px-4 py-6">
       <div class="flex flex-col md:flex-row justify-between items-center">
         <div class="mb-4 md:mb-0">
-          <p class="text-sm text-gray-600">© 2025 Dr. Misha Bogomaz. All rights reserved.</p>
+          <p class="text-sm text-gray-600">© 2026 Dr. Misha Bogomaz. All rights reserved.</p>
         </div>
         <div class="flex flex-wrap gap-6 text-sm">
           <NuxtLink 
